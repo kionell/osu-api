@@ -154,7 +154,7 @@
         "@typescript-eslint/no-useless-constructor": "error",
         "@typescript-eslint/explicit-module-boundary-types": "error",
         
-        "indent": ["error", 2],
+        "indent": "off",
         "@typescript-eslint/indent": ["error", 2]
       }
     },
