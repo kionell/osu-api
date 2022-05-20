@@ -1,7 +1,14 @@
+import { Server } from './Enums';
+
 /**
  * Abstract URL scanner.
  */
 export abstract class URLScanner {
+  /**
+   * Name of this server.
+   */
+  abstract readonly SERVER_NAME: keyof typeof Server;
+
   /**
    * This regex is for matching signle number ID.
    */
@@ -33,6 +40,15 @@ export abstract class URLScanner {
   abstract readonly SCORE_REGEX: RegExp;
 
   /**
+   * Searches for any server URL in the text.
+   * @param text Input text.
+   * @returns Result of search.
+   */
+  hasServerURL(text?: string | null): boolean {
+    return !!text?.split(' ')?.find((arg) => this.isServerURL(arg));
+  }
+
+  /**
    * Searches for user URL in the text.
    * @param text Input text.
    * @returns Result of search.
@@ -57,6 +73,17 @@ export abstract class URLScanner {
    */
   hasScoreURL(text?: string | null): boolean {
     return !!text?.split(' ')?.find((arg) => this.isScoreURL(arg));
+  }
+
+  /**
+   * Checks if specified URL is any server related URL.
+   * @param url Target URL.
+   * @returns Result of cheking.
+   */
+  isServerURL(url?: string | null): boolean {
+    if (!url) return false;
+
+    return this.BASE_REGEX.test(url);
   }
 
   /**

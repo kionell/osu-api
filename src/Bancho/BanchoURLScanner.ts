@@ -1,6 +1,11 @@
 import { URLScanner, GameMode } from '@Core';
 
 export class BanchoURLScanner extends URLScanner {
+  /**
+   * Name of this server.
+   */
+  readonly SERVER_NAME = 'Bancho';
+
   readonly BASE_REGEX = new RegExp(''
     + /^((http|https):\/\/)?/.source /* Protocol */
     + /(old|osu).ppy.sh/.source, /* Domain */
