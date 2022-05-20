@@ -21,12 +21,12 @@ class APIFactory {
    * @param server Server name.
    * @returns API client.
    */
-  getAPIClient(server: number = Server.Bancho): APIClient | APIClientWithOAuth {
-    switch (server) {
-      case Server.Akatsuki:
-      case Server.Ripple:
-      case Server.Gatari:
-      case Server.Bancho: return BanchoAPIClient.getInstance();
+  getAPIClient(server: keyof typeof Server | null = 'Bancho'): APIClient | APIClientWithOAuth {
+    switch (server?.toLowerCase()) {
+      case 'akatsuki':
+      case 'ripple':
+      case 'gatari':
+      case 'bancho': return BanchoAPIClient.getInstance();
     }
 
     throw new Error('This server is not found or not supported!');
@@ -37,12 +37,12 @@ class APIFactory {
    * @param server Server name.
    * @returns URL scanner.
    */
-  createURLScanner(server: number = Server.Bancho): URLScanner {
-    switch (server) {
-      case Server.Akatsuki:
-      case Server.Ripple:
-      case Server.Gatari:
-      case Server.Bancho: return new BanchoURLScanner();
+  createURLScanner(server: keyof typeof Server | null = 'Bancho'): URLScanner {
+    switch (server?.toLowerCase()) {
+      case 'akatsuki':
+      case 'ripple':
+      case 'gatari':
+      case 'bancho': return new BanchoURLScanner();
     }
 
     throw new Error('This server is not found or not supported!');
@@ -53,12 +53,12 @@ class APIFactory {
    * @param server Server name.
    * @returns URL generator.
    */
-  createURLGenerator(server: number = Server.Bancho): URLGenerator {
-    switch (server) {
-      case Server.Akatsuki:
-      case Server.Ripple:
-      case Server.Gatari:
-      case Server.Bancho: return new BanchoURLGenerator();
+  createURLGenerator(server: keyof typeof Server | null = 'Bancho'): URLGenerator {
+    switch (server?.toLowerCase()) {
+      case 'akatsuki':
+      case 'ripple':
+      case 'gatari':
+      case 'bancho': return new BanchoURLGenerator();
     }
 
     throw new Error('This server is not found or not supported!');
