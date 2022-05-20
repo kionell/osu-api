@@ -7,10 +7,10 @@ import { GameMode } from '../Enums';
 
 /**
  * Tries to convert input value to ruleset ID.
- * @param rulesetName Ruleset name.
+ * @param input Input value.
  * @returns Ruleset ID.
  */
-export function getRulesetId(input?: string | number): GameMode {
+export function getRulesetId(input?: string | number | null): GameMode {
   const value = typeof input === 'string' ? input.toLowerCase() : input;
 
   switch (value) {
@@ -33,10 +33,10 @@ export function getRulesetId(input?: string | number): GameMode {
 
 /**
  * Tries to create a new ruleset instance by input value.
- * @param input .
+ * @param input Input value.
  * @returns Ruleset instance.
  */
-export function getRuleset(input?: string | number): IRuleset {
+export function getRuleset(input?: string | number | null): IRuleset {
   const rulesetId = getRulesetId(input);
 
   switch (rulesetId) {
