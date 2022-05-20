@@ -1,5 +1,5 @@
-import { Method, AxiosRequestConfig } from 'axios';
 import { DifficultyAttributes, IScoreInfo, IBeatmapInfo, IUserInfo, IRuleset, ScoreRank, BeatmapInfo, ScoreInfo, UserInfo } from 'osu-classes';
+import { Method, AxiosRequestConfig } from 'axios';
 import { CatchDifficultyAttributes } from 'osu-catch-stable';
 import { ManiaDifficultyAttributes } from 'osu-mania-stable';
 import { StandardDifficultyAttributes } from 'osu-standard-stable';
@@ -440,30 +440,6 @@ declare function getRulesetId(input?: string | number): GameMode;
  */
 declare function getRuleset(input?: string | number): IRuleset;
 
-/**
- * An API factory.
- */
-declare class APIFactory {
-  /**
-     * Creates a new API client based on a server name.
-     * @param server Server name.
-     * @returns API client.
-     */
-  getAPIClient(server?: number): APIClient | APIClientWithOAuth;
-  /**
-     * Creates a new instance of URL scanner based on a server name.
-     * @param server Server name.
-     * @returns URL scanner.
-     */
-  createURLScanner(server?: number): URLScanner;
-  /**
-     * Creates a new instance of URL generator based on a server name.
-     * @param server Server name.
-     * @returns URL generator.
-     */
-  createURLGenerator(server?: number): URLGenerator;
-}
-
 interface IBanchoAuthTokens {
   access_token: string;
   refresh_token: string;
@@ -769,4 +745,29 @@ declare class BanchoURLScanner extends URLScanner {
  */
 declare function searchBeatmap(beatmapsets: IBanchoBeatmapset[], query?: string): IBanchoBeatmap | null;
 
-export { APICache, APIClient, APIClientWithOAuth, APIFactory, AuthTokens, BanchoAPIClient, BanchoAuthTokens, BanchoBeatmapInfo, BanchoCatchDifficultyAttributes, BanchoManiaDifficultyAttributes, BanchoOsuDifficultyAttributes, BanchoScoreInfo, BanchoTaikoDifficultyAttributes, BanchoURLGenerator, BanchoURLScanner, BanchoUserInfo, GameMode, IAPIResponse, IBanchoAuthTokens, IBanchoBeatmap, IBanchoBeatmapCompact, IBanchoBeatmapset, IBanchoBeatmapsetCompact, IBanchoCatchDifficulty, IBanchoDifficulty, IBanchoHitStatistics, IBanchoManiaDifficulty, IBanchoOsuDifficulty, IBanchoScore, IBanchoTaikoDifficulty, IBanchoUser, IBanchoUserCompact, IBeatmapRequestOptions, ICachedResponse, IDifficultyRequestOptions, IHasAttributes, IHasBeatmaps, IHasLeaderboard, IHasRecent, IHasScores, IHasTop, IHasUsers, ILeaderboardRequestOptions, IScoreListRequestOptions, IScoreRequestOptions, IUserRequestOptions, RankStatus, ScoreType, Server, SortingType, URLGenerator, URLScanner, getRuleset, getRulesetId, searchBeatmap, sortUserBest };
+/**
+ * An API factory.
+ */
+declare class APIFactory {
+  /**
+     * Creates a new API client based on a server name.
+     * @param server Server name.
+     * @returns API client.
+     */
+  getAPIClient(server?: number): APIClient | APIClientWithOAuth;
+  /**
+     * Creates a new instance of URL scanner based on a server name.
+     * @param server Server name.
+     * @returns URL scanner.
+     */
+  createURLScanner(server?: number): URLScanner;
+  /**
+     * Creates a new instance of URL generator based on a server name.
+     * @param server Server name.
+     * @returns URL generator.
+     */
+  createURLGenerator(server?: number): URLGenerator;
+}
+declare const _default: APIFactory;
+
+export { APICache, APIClient, APIClientWithOAuth, _default as APIFactory, AuthTokens, BanchoAPIClient, BanchoAuthTokens, BanchoBeatmapInfo, BanchoCatchDifficultyAttributes, BanchoManiaDifficultyAttributes, BanchoOsuDifficultyAttributes, BanchoScoreInfo, BanchoTaikoDifficultyAttributes, BanchoURLGenerator, BanchoURLScanner, BanchoUserInfo, GameMode, IAPIResponse, IBanchoAuthTokens, IBanchoBeatmap, IBanchoBeatmapCompact, IBanchoBeatmapset, IBanchoBeatmapsetCompact, IBanchoCatchDifficulty, IBanchoDifficulty, IBanchoHitStatistics, IBanchoManiaDifficulty, IBanchoOsuDifficulty, IBanchoScore, IBanchoTaikoDifficulty, IBanchoUser, IBanchoUserCompact, IBeatmapRequestOptions, ICachedResponse, IDifficultyRequestOptions, IHasAttributes, IHasBeatmaps, IHasLeaderboard, IHasRecent, IHasScores, IHasTop, IHasUsers, ILeaderboardRequestOptions, IScoreListRequestOptions, IScoreRequestOptions, IUserRequestOptions, RankStatus, ScoreType, Server, SortingType, URLGenerator, URLScanner, getRuleset, getRulesetId, searchBeatmap, sortUserBest };
