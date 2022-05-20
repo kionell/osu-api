@@ -362,6 +362,10 @@ declare abstract class URLGenerator {
  */
 declare abstract class URLScanner {
   /**
+     * Name of this server.
+     */
+  abstract readonly SERVER_NAME: keyof typeof Server;
+  /**
      * This regex is for matching signle number ID.
      */
   readonly RAW_ID_REGEX: RegExp;
@@ -386,6 +390,12 @@ declare abstract class URLScanner {
      */
   abstract readonly SCORE_REGEX: RegExp;
   /**
+     * Searches for any server URL in the text.
+     * @param text Input text.
+     * @returns Result of search.
+     */
+  hasServerURL(text?: string | null): boolean;
+  /**
      * Searches for user URL in the text.
      * @param text Input text.
      * @returns Result of search.
@@ -403,6 +413,12 @@ declare abstract class URLScanner {
      * @returns Result of search.
      */
   hasScoreURL(text?: string | null): boolean;
+  /**
+     * Checks if specified URL is any server related URL.
+     * @param url Target URL.
+     * @returns Result of cheking.
+     */
+  isServerURL(url?: string | null): boolean;
   /**
      * Checks if specified URL is user URL.
      * @param url Target URL.
@@ -429,16 +445,16 @@ declare function sortUserBest(scores: IScoreInfo[], order?: SortingType): IScore
 
 /**
  * Tries to convert input value to ruleset ID.
- * @param rulesetName Ruleset name.
+ * @param input Input value.
  * @returns Ruleset ID.
  */
-declare function getRulesetId(input?: string | number): GameMode;
+declare function getRulesetId(input?: string | number | null): GameMode;
 /**
  * Tries to create a new ruleset instance by input value.
- * @param input .
+ * @param input Input value.
  * @returns Ruleset instance.
  */
-declare function getRuleset(input?: string | number): IRuleset;
+declare function getRuleset(input?: string | number | null): IRuleset;
 
 interface IBanchoAuthTokens {
   access_token: string;
@@ -713,6 +729,10 @@ declare class BanchoAPIClient extends APIClientWithOAuth implements IHasAttribut
 }
 
 declare class BanchoURLScanner extends URLScanner {
+  /**
+     * Name of this server.
+     */
+  readonly SERVER_NAME = 'Bancho';
   readonly BASE_REGEX: RegExp;
   readonly USER_REGEX: RegExp;
   readonly BEATMAP_REGEX: RegExp;
@@ -754,19 +774,19 @@ declare class APIFactory {
      * @param server Server name.
      * @returns API client.
      */
-  getAPIClient(server?: number): APIClient | APIClientWithOAuth;
+  getAPIClient(server?: keyof typeof Server | null): APIClient | APIClientWithOAuth;
   /**
      * Creates a new instance of URL scanner based on a server name.
      * @param server Server name.
      * @returns URL scanner.
      */
-  createURLScanner(server?: number): URLScanner;
+  createURLScanner(server?: keyof typeof Server | null): URLScanner;
   /**
      * Creates a new instance of URL generator based on a server name.
      * @param server Server name.
      * @returns URL generator.
      */
-  createURLGenerator(server?: number): URLGenerator;
+  createURLGenerator(server?: keyof typeof Server | null): URLGenerator;
 }
 declare const _default: APIFactory;
 
