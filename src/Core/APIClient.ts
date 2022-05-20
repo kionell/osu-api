@@ -7,17 +7,11 @@ import axios, {
 
 import { APICache } from './APICache';
 import type { IAPIResponse } from './IAPIResponse';
-import type { URLGenerator } from './URLGenerator';
 
 /**
  * An API client.
  */
 export abstract class APIClient {
-  /**
-   * URL generator.
-   */
-  abstract urlGenerator: URLGenerator;
-
   /**
    * An API cache.
    */
