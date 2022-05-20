@@ -1,5 +1,6 @@
 import {
   type APIClient,
+  type APIClientWithOAuth,
   type URLGenerator,
   type URLScanner,
   Server,
@@ -20,7 +21,7 @@ export class APIFactory {
    * @param server Server name.
    * @returns API client.
    */
-  createAPIClient(server: number = Server.Bancho): APIClient {
+  getAPIClient(server: number = Server.Bancho): APIClient | APIClientWithOAuth {
     switch (server) {
       case Server.Akatsuki:
       case Server.Ripple:
