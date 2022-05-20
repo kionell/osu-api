@@ -43,7 +43,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   /**
    * Bancho URL generator.
    */
-  urlGenerator = new BanchoURLGenerator();
+  readonly urlGenerator = new BanchoURLGenerator();
 
   /**
    * Cached pairs of username & user ID.
