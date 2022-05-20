@@ -15,7 +15,7 @@ import {
 /**
  * An API factory.
  */
-export class APIFactory {
+class APIFactory {
   /**
    * Creates a new API client based on a server name.
    * @param server Server name.
@@ -64,3 +64,5 @@ export class APIFactory {
     throw new Error('This server is not found or not supported!');
   }
 }
+
+export default new APIFactory();
