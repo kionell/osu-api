@@ -21,7 +21,11 @@ class APIFactory {
    * @param server Server name.
    * @returns API client.
    */
-  getAPIClient(server: keyof typeof Server | null = 'Bancho'): APIClient | APIClientWithOAuth {
+  getAPIClient(server?: keyof typeof Server | null): APIClient | APIClientWithOAuth {
+    if (server === null || server === undefined) {
+      return BanchoAPIClient.getInstance();
+    }
+
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
@@ -37,7 +41,11 @@ class APIFactory {
    * @param server Server name.
    * @returns URL scanner.
    */
-  createURLScanner(server: keyof typeof Server | null = 'Bancho'): URLScanner {
+  createURLScanner(server?: keyof typeof Server | null): URLScanner {
+    if (server === null || server === undefined) {
+      return new BanchoURLScanner();
+    }
+
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
@@ -53,7 +61,11 @@ class APIFactory {
    * @param server Server name.
    * @returns URL generator.
    */
-  createURLGenerator(server: keyof typeof Server | null = 'Bancho'): URLGenerator {
+  createURLGenerator(server?: keyof typeof Server | null): URLGenerator {
+    if (server === null || server === undefined) {
+      return new BanchoURLGenerator();
+    }
+
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
