@@ -1,5 +1,5 @@
 import { ScoreInfo } from 'osu-classes';
-import { getRulesetById } from '@Core';
+import { getRuleset } from '@Core';
 import { BanchoBeatmapInfo } from './BanchoBeatmapInfo';
 import type { IBanchoScore } from '../Interfaces';
 
@@ -17,7 +17,7 @@ export class BanchoScoreInfo extends ScoreInfo {
     this.username = other.user?.username ?? this.username;
 
     this.rulesetId = other.mode_int ?? this.rulesetId;
-    this.ruleset = getRulesetById(this.rulesetId);
+    this.ruleset = getRuleset(this.rulesetId);
     this.mods = this.ruleset.createModCombination(other.mods.join(''));
 
     if (other.beatmap) {

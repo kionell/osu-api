@@ -1,5 +1,5 @@
 import { UserInfo } from 'osu-classes';
-import { getRulesetIdByName } from '@Core';
+import { getRulesetId } from '@Core';
 import type { IBanchoUserCompact, IBanchoUser } from '../Interfaces';
 
 export class BanchoUserInfo extends UserInfo {
@@ -7,7 +7,7 @@ export class BanchoUserInfo extends UserInfo {
     super();
 
     const full = other as IBanchoUser;
-    const rulesetId = getRulesetIdByName(full.playmode);
+    const rulesetId = getRulesetId(full.playmode);
 
     this.countryCode = other.country_code;
     this.id = other.id;
