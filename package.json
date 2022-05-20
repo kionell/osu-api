@@ -36,7 +36,6 @@
     "@typescript-eslint/parser": "^5.21.0",
     "eslint": "^8.14.0",
     "eslint-plugin-import": "^2.26.0",
-    "husky": "^7.0.4",
     "jest": "^28.0.3",
     "rollup": "^2.71.1",
     "rollup-plugin-dts": "^4.2.1",
