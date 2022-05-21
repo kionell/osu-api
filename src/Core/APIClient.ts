@@ -23,7 +23,7 @@ export abstract class APIClient {
   private static _clientInstance: APIClient;
 
   protected constructor() {
-    return;
+    return this;
   }
 
   /**
