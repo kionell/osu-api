@@ -52,8 +52,10 @@ export abstract class APIClient {
         data,
       });
 
+      const status200 = response.status >= 200 && response.status < 300;
+
       const result: IAPIResponse = {
-        data: response.status === 200 ? response.data : null,
+        data: status200 ? response.data : null,
         url,
       };
 
