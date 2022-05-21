@@ -53,12 +53,8 @@ declare abstract class APIClient {
   /**
      * Singleton instance of a client.
      */
-  private static _clientInstance;
-  protected constructor();
-  /**
-     * @returns Instance of an API client.
-     */
-  static getInstance(): APIClient;
+  private static _instance;
+  constructor();
   /**
      * Performs a request to the endpoint of API.
      * The response can be taken from the cache or obtained directly from the API.
