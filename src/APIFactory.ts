@@ -23,14 +23,14 @@ class APIFactory {
    */
   getAPIClient(server?: keyof typeof Server | null): APIClient | APIClientWithOAuth {
     if (server === null || server === undefined) {
-      return BanchoAPIClient.getInstance();
+      return new BanchoAPIClient();
     }
 
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
       case 'gatari':
-      case 'bancho': return BanchoAPIClient.getInstance();
+      case 'bancho': return new BanchoAPIClient();
     }
 
     throw new Error('This server is not found or not supported!');

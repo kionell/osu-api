@@ -20,23 +20,14 @@ export abstract class APIClient {
   /**
    * Singleton instance of a client.
    */
-  private static _clientInstance: APIClient;
+  private static _instance: APIClient;
 
-  protected constructor() {
-    return this;
-  }
-
-  /**
-   * @returns Instance of an API client.
-   */
-  static getInstance(): APIClient {
-    if (!this._clientInstance) {
-      const APIClient = this.constructor as new () => APIClient;
-
-      this._clientInstance = new APIClient();
+  constructor() {
+    if (APIClient._instance) {
+      return APIClient._instance;
     }
 
-    return this._clientInstance;
+    APIClient._instance = this;
   }
 
   /**
