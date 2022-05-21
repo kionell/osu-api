@@ -3,6 +3,7 @@ import md5 from 'md5';
 import axios, {
   type Method,
   type AxiosRequestConfig,
+  AxiosError,
 } from 'axios';
 
 import { APICache } from './APICache';
@@ -39,12 +40,12 @@ export abstract class APIClient {
    * @returns API response or cached response.
    */
   protected async _request(url: string, method?: Method, data?: unknown): Promise<IAPIResponse> {
-    const hash = md5(url);
-    const cached = this.cache.get(hash);
-
-    if (cached) return cached;
-
     try {
+      const hash = md5(url);
+      const cached = this.cache.get(hash);
+
+      if (cached) return cached;
+
       const response = await axios.request({
         ...this.config,
         url,
@@ -52,10 +53,10 @@ export abstract class APIClient {
         data,
       });
 
-      const status200 = response.status >= 200 && response.status < 300;
-
       const result: IAPIResponse = {
-        data: status200 ? response.data : null,
+        status: response.status,
+        data: response.data,
+        error: null,
         url,
       };
 
@@ -68,8 +69,18 @@ export abstract class APIClient {
 
       return result;
     }
-    catch {
-      return { data: null, url };
+    catch (err: unknown) {
+      const axiosError = err as AxiosError;
+
+      const response = axiosError?.response ?? null;
+      const data = response?.data as any ?? null;
+
+      return {
+        error: data?.error ?? data?.message ?? response?.statusText,
+        status: response?.status ?? 500,
+        data: null,
+        url,
+      };
     }
   }
 
