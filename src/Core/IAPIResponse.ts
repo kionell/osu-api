@@ -8,6 +8,16 @@ export interface IAPIResponse {
   url: string,
 
   /**
+   * Status code of this response.
+   */
+  status: number;
+
+  /**
+   * Error message of this reponse.
+   */
+  error: string | null;
+
+  /**
    * Data of this response.
    */
   data: any;
