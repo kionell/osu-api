@@ -88,7 +88,7 @@ export abstract class APIClient {
         ?? response?.statusText
         ?? axiosError?.message;
 
-      if (axiosError?.code !== 'ECONNREFUSED') {
+      if (axiosError?.code === 'ECONNREFUSED') {
         error = 'Can\'t connect to API!';
       }
 
