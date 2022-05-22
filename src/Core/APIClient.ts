@@ -25,16 +25,11 @@ export abstract class APIClient {
 
   constructor() {
     const constructor = this.constructor as new () => this;
+    const instance = APIClient._instances.get(constructor);
 
-    if (APIClient._instances.has(constructor)) {
-      return APIClient._instances.get(constructor) as this;
-    }
+    if (instance) return instance;
 
-    const instance = new constructor();
-
-    APIClient._instances.set(constructor, instance);
-
-    return instance;
+    APIClient._instances.set(constructor, this);
   }
 
   /**
