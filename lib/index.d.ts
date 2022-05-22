@@ -59,9 +59,9 @@ declare abstract class APIClient {
      */
   cache: APICache;
   /**
-     * Singleton instance of a client.
+     * Singleton instances of different clients.
      */
-  private static _instance;
+  private static _instances;
   constructor();
   /**
      * Performs a request to the endpoint of API.
