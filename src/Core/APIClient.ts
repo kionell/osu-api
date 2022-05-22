@@ -82,9 +82,19 @@ export abstract class APIClient {
 
       const response = axiosError?.response ?? null;
       const data = response?.data as any ?? null;
-      const error = axiosError?.code !== 'ECONNREFUSED'
-        ? data?.error ?? data?.message ?? response?.statusText
-        : 'Can\'t connect to the API!';
+
+      let error = data?.error
+        ?? data?.message
+        ?? response?.statusText
+        ?? axiosError?.message;
+
+      if (axiosError?.code !== 'ECONNREFUSED') {
+        error = 'Can\'t connect to API!';
+      }
+
+      if (!error) {
+        error = 'An unknown error has occured!';
+      }
 
       return {
         status: response?.status ?? 500,
