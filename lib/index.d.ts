@@ -127,6 +127,12 @@ declare abstract class APIClientWithOAuth extends APIClient {
      */
   abstract authorize(): Promise<boolean>;
   /**
+     * Adds credentials to this API client.
+     * @param clientId API client ID.
+     * @param clientSecret API client secret.
+     */
+  addCredentials(clientId?: string, clientSecret?: string): void;
+  /**
       * If this client is authorized or not.
       */
   get isAuthorized(): boolean;
@@ -697,11 +703,9 @@ declare class BanchoAPIClient extends APIClientWithOAuth implements IHasAttribut
   private _users;
   /**
      * Authorizes to the API.
-     * @param clientId Bancho API v2 client ID.
-     * @param clientSecret Bancho API v2 client secret.
      * @returns If authorization was successful or not.
      */
-  authorize(clientId?: string, clientSecret?: string): Promise<boolean>;
+  authorize(): Promise<boolean>;
   getBeatmap(options?: IBeatmapRequestOptions): Promise<BanchoBeatmapInfo | null>;
   getScore(options?: IScoreRequestOptions): Promise<BanchoScoreInfo | null>;
   getLeaderboard(options?: ILeaderboardRequestOptions): Promise<BanchoScoreInfo[]>;
@@ -786,6 +790,13 @@ declare class APIFactory {
      * @returns API client.
      */
   getAPIClient(server?: keyof typeof Server | null): APIClient | APIClientWithOAuth;
+  /**
+     * Adds credentials to the specific server API.
+     * @param server Server name.
+     * @param clientId API client ID.
+     * @param clientSecret API client secret.
+     */
+  addCredentials(server?: keyof typeof Server | null, clientId?: string, clientSecret?: string): void;
   /**
      * Creates a new instance of URL scanner based on a server name.
      * @param server Server name.
