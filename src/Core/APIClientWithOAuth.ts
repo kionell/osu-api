@@ -25,6 +25,16 @@ export abstract class APIClientWithOAuth extends APIClient {
   abstract authorize(): Promise<boolean>;
 
   /**
+   * Adds credentials to this API client.
+   * @param clientId API client ID.
+   * @param clientSecret API client secret.
+   */
+  addCredentials(clientId?: string, clientSecret?: string): void {
+    this._clientId = clientId ?? this._clientId;
+    this._clientSecret = clientSecret ?? this._clientSecret;
+  }
+
+  /**
     * If this client is authorized or not.
     */
   get isAuthorized(): boolean {
