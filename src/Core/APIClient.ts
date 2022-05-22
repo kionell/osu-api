@@ -19,16 +19,22 @@ export abstract class APIClient {
   cache: APICache = new APICache();
 
   /**
-   * Singleton instance of a client.
+   * Singleton instances of different clients.
    */
-  private static _instance: APIClient;
+  private static _instances = new Map<new () => APIClient, APIClient>();
 
   constructor() {
-    if (APIClient._instance) {
-      return APIClient._instance;
+    const constructor = this.constructor as new () => this;
+
+    if (APIClient._instances.has(constructor)) {
+      return APIClient._instances.get(constructor) as this;
     }
 
-    APIClient._instance = this;
+    const instance = new constructor();
+
+    APIClient._instances.set(constructor, instance);
+
+    return instance;
   }
 
   /**
