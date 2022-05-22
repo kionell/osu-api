@@ -101,6 +101,9 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     if (options?.search) {
       const url = this.urlGenerator.generateBeatmapsetSearchURL(options);
       const response = await this._request(url);
+
+      if (response.data === null) return null;
+
       const targetBeatmap = searchBeatmap(response.data.beatmapsets, options?.search);
 
       if (!targetBeatmap) return null;
