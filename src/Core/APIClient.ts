@@ -23,13 +23,20 @@ export abstract class APIClient {
    */
   private static _instances = new Map<new () => APIClient, APIClient>();
 
-  constructor() {
-    const constructor = this.constructor as new () => this;
-    const instance = APIClient._instances.get(constructor);
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  protected constructor() {}
 
-    if (instance) return instance;
+  static getInstance(): APIClient {
+    const constructor = this.constructor as new () => APIClient;
+    const existingInstance = this._instances.get(constructor);
 
-    APIClient._instances.set(constructor, this);
+    if (existingInstance) return existingInstance;
+
+    const newInstance = new constructor();
+
+    this._instances.set(constructor, newInstance);
+
+    return newInstance;
   }
 
   /**

@@ -21,16 +21,16 @@ class APIFactory {
    * @param server Server name.
    * @returns API client.
    */
-  getAPIClient(server?: keyof typeof Server | null): APIClient | APIClientWithOAuth {
+  getAPIClient(server?: keyof typeof Server | null): APIClient {
     if (server === null || server === undefined) {
-      return new BanchoAPIClient();
+      return BanchoAPIClient.getInstance();
     }
 
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
       case 'gatari':
-      case 'bancho': return new BanchoAPIClient();
+      case 'bancho': return BanchoAPIClient.getInstance();
     }
 
     throw new Error('This server is not found or not supported!');
