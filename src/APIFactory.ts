@@ -37,6 +37,22 @@ class APIFactory {
   }
 
   /**
+   * Adds credentials to the specific server API.
+   * @param server Server name.
+   * @param clientId API client ID.
+   * @param clientSecret API client secret.
+   */
+  addCredentials(server?: keyof typeof Server | null, clientId?: string, clientSecret?: string): void {
+    const client = this.getAPIClient(server) as APIClientWithOAuth;
+
+    if (!client.addCredentials) {
+      throw new Error('This server API does not require any authorization!');
+    }
+
+    client.addCredentials(clientId, clientSecret);
+  }
+
+  /**
    * Creates a new instance of URL scanner based on a server name.
    * @param server Server name.
    * @returns URL scanner.
