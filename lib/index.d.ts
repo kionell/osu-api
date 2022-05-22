@@ -62,7 +62,8 @@ declare abstract class APIClient {
      * Singleton instances of different clients.
      */
   private static _instances;
-  constructor();
+  protected constructor();
+  static getInstance(): APIClient;
   /**
      * Performs a request to the endpoint of API.
      * The response can be taken from the cache or obtained directly from the API.
@@ -789,7 +790,7 @@ declare class APIFactory {
      * @param server Server name.
      * @returns API client.
      */
-  getAPIClient(server?: keyof typeof Server | null): APIClient | APIClientWithOAuth;
+  getAPIClient(server?: keyof typeof Server | null): APIClient;
   /**
      * Adds credentials to the specific server API.
      * @param server Server name.
