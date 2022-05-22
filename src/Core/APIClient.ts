@@ -27,7 +27,7 @@ export abstract class APIClient {
   protected constructor() {}
 
   static getInstance(): APIClient {
-    const constructor = this.constructor as new () => APIClient;
+    const constructor = this.prototype.constructor as new () => APIClient;
     const existingInstance = this._instances.get(constructor);
 
     if (existingInstance) return existingInstance;
