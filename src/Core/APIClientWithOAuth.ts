@@ -1,7 +1,7 @@
-import type { AxiosRequestConfig, AxiosError, Method } from 'axios';
+import type { AxiosRequestConfig, AxiosError } from 'axios';
 import type { IAPIResponse } from './IAPIResponse';
 import type { AuthTokens } from './AuthTokens';
-import { APIClient } from './APIClient';
+import { APIClient, RequestConfig } from './APIClient';
 
 export abstract class APIClientWithOAuth extends APIClient {
   /**
@@ -44,23 +44,23 @@ export abstract class APIClientWithOAuth extends APIClient {
   /**
    * Performs a request to the endpoint of API with pre-authorization.
    * The response can be taken from the cache or obtained directly from the API.
-   * @param url Request URL.
+   * @param config Request config.
    * @param method Request method.
    * @param data Request data.
    * @returns API response or cached response.
    */
-  protected async _request(url: string, method?: Method, data?: unknown): Promise<IAPIResponse> {
+  protected async _request(config: RequestConfig): Promise<IAPIResponse> {
     if (!this.isAuthorized) await this.authorize();
 
     try {
-      return super._request(url, method, data);
+      return super._request(config);
     }
     catch (err: unknown) {
       const axiosError = err as AxiosError;
       const status = axiosError?.response?.status;
 
       if (status === 401 && await this.authorize()) {
-        return this._request(url, method, data);
+        return this._request(config);
       }
 
       throw err;

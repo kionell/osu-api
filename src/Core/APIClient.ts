@@ -1,13 +1,17 @@
 import md5 from 'md5';
 
 import axios, {
-  type Method,
   type AxiosRequestConfig,
   AxiosError,
 } from 'axios';
 
 import { APICache } from './APICache';
 import type { IAPIResponse } from './IAPIResponse';
+
+/**
+ * Universal request config.
+ */
+export type RequestConfig = Required<Pick<AxiosRequestConfig, 'url' | 'method'>> & AxiosRequestConfig;
 
 /**
  * An API client.
@@ -42,33 +46,24 @@ export abstract class APIClient {
   /**
    * Performs a request to the endpoint of API.
    * The response can be taken from the cache or obtained directly from the API.
-   * @param url Request URL.
-   * @param method Request method.
-   * @param data Request data.
+   * @param config Request config.
    * @returns API response or cached response.
    */
-  protected async _request(url: string, method?: Method, data?: unknown): Promise<IAPIResponse> {
+  protected async _request(config: RequestConfig): Promise<IAPIResponse> {
     try {
-      const hash = md5(url);
+      const hash = md5(config.url);
       const cached = this.cache.get(hash);
 
       if (cached) return cached;
 
-      const response = await axios.request({
-        ...this.config,
-        url,
-        method,
-        data,
-      });
+      const response = await axios.request(config);
 
       const result: IAPIResponse = {
+        url: config.url,
         status: response.status,
         data: response.data,
         error: null,
-        url,
       };
-
-      if (method === 'POST' || method === 'post') return result;
 
       this.cache.set(hash, {
         ...result,
@@ -97,10 +92,10 @@ export abstract class APIClient {
       }
 
       return {
+        url: config.url,
         status: response?.status ?? 500,
         data: null,
         error,
-        url,
       };
     }
   }
