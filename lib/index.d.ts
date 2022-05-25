@@ -1,5 +1,5 @@
 import { DifficultyAttributes, IScoreInfo, IBeatmapInfo, IUserInfo, IRuleset, ScoreRank, BeatmapInfo, ScoreInfo, UserInfo } from 'osu-classes';
-import { Method, AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import { CatchDifficultyAttributes } from 'osu-catch-stable';
 import { ManiaDifficultyAttributes } from 'osu-mania-stable';
 import { StandardDifficultyAttributes } from 'osu-standard-stable';
@@ -51,6 +51,10 @@ declare class APICache extends Map<string, ICachedResponse> {
 }
 
 /**
+ * Universal request config.
+ */
+declare type RequestConfig = Required<Pick<AxiosRequestConfig, 'url'>> & AxiosRequestConfig;
+/**
  * An API client.
  */
 declare abstract class APIClient {
@@ -67,12 +71,10 @@ declare abstract class APIClient {
   /**
      * Performs a request to the endpoint of API.
      * The response can be taken from the cache or obtained directly from the API.
-     * @param url Request URL.
-     * @param method Request method.
-     * @param data Request data.
+     * @param config Request config.
      * @returns API response or cached response.
      */
-  protected _request(url: string, method?: Method, data?: unknown): Promise<IAPIResponse>;
+  protected _request(config: RequestConfig): Promise<IAPIResponse>;
   /**
      * Default API request config.
      */
@@ -140,12 +142,12 @@ declare abstract class APIClientWithOAuth extends APIClient {
   /**
      * Performs a request to the endpoint of API with pre-authorization.
      * The response can be taken from the cache or obtained directly from the API.
-     * @param url Request URL.
+     * @param config Request config.
      * @param method Request method.
      * @param data Request data.
      * @returns API response or cached response.
      */
-  protected _request(url: string, method?: Method, data?: unknown): Promise<IAPIResponse>;
+  protected _request(config: RequestConfig): Promise<IAPIResponse>;
   /**
      * Default API request config with authorization.
      */
@@ -813,4 +815,4 @@ declare class APIFactory {
 }
 declare const _default: APIFactory;
 
-export { APICache, APIClient, APIClientWithOAuth, _default as APIFactory, AuthTokens, BanchoAPIClient, BanchoAuthTokens, BanchoBeatmapInfo, BanchoCatchDifficultyAttributes, BanchoManiaDifficultyAttributes, BanchoOsuDifficultyAttributes, BanchoScoreInfo, BanchoTaikoDifficultyAttributes, BanchoURLGenerator, BanchoURLScanner, BanchoUserInfo, GameMode, IAPIResponse, IBanchoAuthTokens, IBanchoBeatmap, IBanchoBeatmapCompact, IBanchoBeatmapset, IBanchoBeatmapsetCompact, IBanchoCatchDifficulty, IBanchoDifficulty, IBanchoHitStatistics, IBanchoManiaDifficulty, IBanchoOsuDifficulty, IBanchoScore, IBanchoTaikoDifficulty, IBanchoUser, IBanchoUserCompact, IBeatmapRequestOptions, ICachedResponse, IDifficultyRequestOptions, IHasAttributes, IHasBeatmaps, IHasLeaderboard, IHasRecent, IHasScores, IHasTop, IHasUsers, ILeaderboardRequestOptions, IScoreListRequestOptions, IScoreRequestOptions, IUserRequestOptions, RankStatus, ScoreType, Server, SortingType, URLGenerator, URLScanner, getRuleset, getRulesetId, getServerName, searchBeatmap, sortUserBest };
+export { APICache, APIClient, APIClientWithOAuth, _default as APIFactory, AuthTokens, BanchoAPIClient, BanchoAuthTokens, BanchoBeatmapInfo, BanchoCatchDifficultyAttributes, BanchoManiaDifficultyAttributes, BanchoOsuDifficultyAttributes, BanchoScoreInfo, BanchoTaikoDifficultyAttributes, BanchoURLGenerator, BanchoURLScanner, BanchoUserInfo, GameMode, IAPIResponse, IBanchoAuthTokens, IBanchoBeatmap, IBanchoBeatmapCompact, IBanchoBeatmapset, IBanchoBeatmapsetCompact, IBanchoCatchDifficulty, IBanchoDifficulty, IBanchoHitStatistics, IBanchoManiaDifficulty, IBanchoOsuDifficulty, IBanchoScore, IBanchoTaikoDifficulty, IBanchoUser, IBanchoUserCompact, IBeatmapRequestOptions, ICachedResponse, IDifficultyRequestOptions, IHasAttributes, IHasBeatmaps, IHasLeaderboard, IHasRecent, IHasScores, IHasTop, IHasUsers, ILeaderboardRequestOptions, IScoreListRequestOptions, IScoreRequestOptions, IUserRequestOptions, RankStatus, RequestConfig, ScoreType, Server, SortingType, URLGenerator, URLScanner, getRuleset, getRulesetId, getServerName, searchBeatmap, sortUserBest };

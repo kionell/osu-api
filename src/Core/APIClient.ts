@@ -11,7 +11,7 @@ import type { IAPIResponse } from './IAPIResponse';
 /**
  * Universal request config.
  */
-export type RequestConfig = Required<Pick<AxiosRequestConfig, 'url' | 'method'>> & AxiosRequestConfig;
+export type RequestConfig = Required<Pick<AxiosRequestConfig, 'url'>> & AxiosRequestConfig;
 
 /**
  * An API client.

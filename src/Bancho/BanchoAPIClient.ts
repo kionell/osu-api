@@ -91,7 +91,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   async getBeatmap(options?: IBeatmapRequestOptions): Promise<BanchoBeatmapInfo | null> {
     if (options?.beatmapId || options?.hash) {
       const url = this.urlGenerator.generateBeatmapInfoURL(options);
-      const response = await this._request(url);
+      const response = await this._request({ url });
 
       if (response.data === null) return null;
 
@@ -100,7 +100,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
 
     if (options?.search) {
       const url = this.urlGenerator.generateBeatmapsetSearchURL(options);
-      const response = await this._request(url);
+      const response = await this._request({ url });
 
       if (response.data === null) return null;
 
@@ -118,7 +118,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     if (!options?.scoreId) return null;
 
     const url = this.urlGenerator.generateScoreInfoURL(options);
-    const response = await this._request(url);
+    const response = await this._request({ url });
 
     if (response.data === null) return null;
 
@@ -165,7 +165,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     if (!options?.user) return null;
 
     const url = this.urlGenerator.generateUserInfoURL(options);
-    const response = await this._request(url);
+    const response = await this._request({ url });
 
     if (response.data === null) return null;
 
@@ -176,9 +176,15 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     if (!options?.beatmapId) return null;
 
     const url = this.urlGenerator.generateDifficultyURL(options);
-    const response = await this._request(url, 'POST', {
+    const data = {
       mods: options.mods?.toString(),
       ruleset_id: options.mode,
+    };
+
+    const response = await this._request({
+      method: 'POST',
+      data,
+      url,
     });
 
     if (response.data === null) return null;
@@ -218,7 +224,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
    * @returns A list of adapted scores.
    */
   private async _getScores(url: string): Promise<BanchoScoreInfo[]> {
-    const response = await this._request(url);
+    const response = await this._request({ url });
 
     if (response.data === null) return [];
 
