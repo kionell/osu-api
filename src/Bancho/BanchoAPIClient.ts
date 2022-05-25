@@ -67,8 +67,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     const data = {
       client_id: this._clientId,
       client_secret: this._clientSecret,
-      grant_type: this._tokens ? 'refresh_token' : 'client_credentials',
-      refresh_token: this._tokens?.refreshToken,
+      grant_type: 'client_credentials',
       scope: 'public',
     };
 
