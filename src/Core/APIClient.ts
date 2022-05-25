@@ -51,7 +51,7 @@ export abstract class APIClient {
    */
   protected async _request(config: RequestConfig): Promise<IAPIResponse> {
     try {
-      const hash = md5(config.url);
+      const hash = md5(JSON.stringify(config));
       const cached = this.cache.get(hash);
 
       if (cached) return cached;
