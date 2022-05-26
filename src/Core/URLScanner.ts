@@ -120,7 +120,7 @@ export abstract class URLScanner {
   }
 
   getRulesetIdFromURL(url?: string | null): GameMode | null {
-    if (!url) return null;
+    if (!url || !this.isServerURL(url)) return null;
 
     const params = new URL(url).searchParams;
     const mode = params.get('m') ?? params.get('mode');
