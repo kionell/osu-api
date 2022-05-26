@@ -6,7 +6,7 @@ export class BanchoAuthTokens extends AuthTokens {
     super();
 
     // Convert seconds to milliseconds
-    const expiresIn = tokens?.expires_in ?? 0 * 1000;
+    const expiresIn = (tokens?.expires_in ?? 0) * 1000;
 
     this.expiresAt = new Date(Date.now() + expiresIn);
     this.accessToken = tokens?.access_token ?? '';
