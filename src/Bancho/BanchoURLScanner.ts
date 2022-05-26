@@ -69,10 +69,13 @@ export class BanchoURLScanner extends URLScanner {
     const isBeatmapURL = this.BEATMAP_REGEX.test(url)
       || this.BEATMAP_WITH_SET_REGEX.test(url);
 
-    const hasRuleset = url.includes('osu')
-      || url.includes('taiko')
-      || url.includes('fruits')
-      || url.includes('mania');
+    const params = new URL(url).searchParams;
+    const mode = params.get('m') ?? params.get('mode');
+
+    const hasRuleset = mode === '0' || url.includes('osu')
+      || mode === '1' || url.includes('taiko')
+      || mode === '2' || url.includes('fruits')
+      || mode === '3' || url.includes('mania');
 
     return isBeatmapURL && hasRuleset;
   }
