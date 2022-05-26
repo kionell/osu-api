@@ -22,7 +22,7 @@ export class BanchoURLScanner extends URLScanner {
     + this.BASE_REGEX.source /* Base */
     + /\/(b|beatmaps)/.source /* Path */
     + /\/[0-9]+/.source /* Beatmap ID */
-    + /(\?mode=(osu|taiko|fruits|mania)){0,1}$/.source, /* Mode additions */
+    + /(\?(mode=(osu|taiko|fruits|mania))|(m=(0|1|2|3))){0,1}$/.source, /* Mode additions */
   );
 
   readonly BEATMAPSET_REGEX = new RegExp(''
