@@ -56,7 +56,9 @@ export abstract class APIClient {
 
       if (cached) return cached;
 
-      const response = await axios.request(config);
+      const response = await axios.request({
+        ...this.config, ...config,
+      });
 
       const result: IAPIResponse = {
         url: config.url,
