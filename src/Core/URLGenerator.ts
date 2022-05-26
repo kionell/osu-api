@@ -36,7 +36,9 @@ export abstract class URLGenerator {
   generateBeatmapURL(beatmapId: string | number, rulesetId?: GameMode): string {
     const url = new URL(`${this.SERVER_ROOT}/b/${beatmapId}`);
 
-    if (rulesetId) url.searchParams.append('m', rulesetId.toString());
+    if (typeof rulesetId === 'number') {
+      url.searchParams.append('m', rulesetId.toString());
+    }
 
     return url.toString();
   }
