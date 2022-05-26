@@ -1,3 +1,5 @@
+import { GameMode } from './Enums';
+
 /**
  * Abstract URL generator.
  */
@@ -28,16 +30,20 @@ export abstract class URLGenerator {
 
   /**
    * Generates a beatmap URL by beatmap ID.
-   * @param user Beatmap ID.
+   * @param beatmapId Beatmap ID.
    * @returns Generated beatmap URL.
    */
-  generateBeatmapURL(beatmapId: string | number): string {
-    return `${this.SERVER_ROOT}/b/${beatmapId}`;
+  generateBeatmapURL(beatmapId: string | number, rulesetId?: GameMode): string {
+    const url = new URL(`${this.SERVER_ROOT}/b/${beatmapId}`);
+
+    if (rulesetId) url.searchParams.append('m', rulesetId.toString());
+
+    return url.toString();
   }
 
   /**
    * Generates a user avatar URL by user ID.
-   * @param user User ID.
+   * @param userId User ID.
    * @returns Generated user avatar URL.
    */
   generateAvatarURL(userId: string | number): string {
@@ -46,7 +52,7 @@ export abstract class URLGenerator {
 
   /**
    * Generates a beatmap cover URL by beatmapset ID.
-   * @param user Beatmapset ID.
+   * @param beatmapsetId Beatmapset ID.
    * @returns Generated beatmap cover URL.
    */
   generateBeatmapCoverURL(beatmapsetId: string | number): string {
@@ -55,7 +61,7 @@ export abstract class URLGenerator {
 
   /**
    * Generates a beatmap thumbnail URL by beatmapset ID.
-   * @param user Beatmapset ID.
+   * @param beatmapsetId Beatmapset ID.
    * @returns Generated beatmap thumbnail URL.
    */
   generateBeatmapThumbnailURL(beatmapsetId: string | number): string {
