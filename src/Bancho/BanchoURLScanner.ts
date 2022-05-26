@@ -1,4 +1,4 @@
-import { URLScanner, GameMode } from '@Core';
+import { URLScanner } from '@Core';
 
 export class BanchoURLScanner extends URLScanner {
   /**
@@ -86,14 +86,6 @@ export class BanchoURLScanner extends URLScanner {
     if (!url) return false;
 
     return this.BEATMAPSET_REGEX.test(url);
-  }
-
-  getRulesetIdFromURL(url?: string | null): GameMode {
-    if (url?.includes('taiko')) return GameMode.Taiko;
-    if (url?.includes('fruits')) return GameMode.Fruits;
-    if (url?.includes('mania')) return GameMode.Mania;
-
-    return GameMode.Osu;
   }
 
   getBeatmapsetIdFromURL(url?: string | null): number {

@@ -1,4 +1,4 @@
-import { Server } from './Enums';
+import { GameMode, Server } from './Enums';
 
 /**
  * Abstract URL scanner.
@@ -117,6 +117,19 @@ export abstract class URLScanner {
     if (!url) return false;
 
     return this.SCORE_REGEX.test(url);
+  }
+
+  getRulesetIdFromURL(url?: string | null): GameMode | null {
+    if (!url) return null;
+
+    const params = new URL(url).searchParams;
+    const mode = params.get('m') ?? params.get('mode');
+
+    if (mode === '1' || url.includes('taiko')) return GameMode.Taiko;
+    if (mode === '2' || url.includes('fruits')) return GameMode.Fruits;
+    if (mode === '3' || url.includes('mania')) return GameMode.Mania;
+
+    return GameMode.Osu;
   }
 
   getBeatmapIdFromURL(url?: string | null): number {
