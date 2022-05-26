@@ -142,7 +142,8 @@ export abstract class URLScanner {
     const regex = this.MULTIPLE_ID_REGEX;
 
     if (this.isBeatmapURL(url)) {
-      const match = url.match(regex) as RegExpMatchArray;
+      const path = new URL(url).pathname;
+      const match = path.match(regex) as RegExpMatchArray;
 
       return parseInt(match[match.length - 1]);
     }
