@@ -346,25 +346,25 @@ declare abstract class URLGenerator {
   generateUserURL(user: string | number): string;
   /**
      * Generates a beatmap URL by beatmap ID.
-     * @param user Beatmap ID.
+     * @param beatmapId Beatmap ID.
      * @returns Generated beatmap URL.
      */
-  generateBeatmapURL(beatmapId: string | number): string;
+  generateBeatmapURL(beatmapId: string | number, rulesetId?: GameMode): string;
   /**
      * Generates a user avatar URL by user ID.
-     * @param user User ID.
+     * @param userId User ID.
      * @returns Generated user avatar URL.
      */
   generateAvatarURL(userId: string | number): string;
   /**
      * Generates a beatmap cover URL by beatmapset ID.
-     * @param user Beatmapset ID.
+     * @param beatmapsetId Beatmapset ID.
      * @returns Generated beatmap cover URL.
      */
   generateBeatmapCoverURL(beatmapsetId: string | number): string;
   /**
      * Generates a beatmap thumbnail URL by beatmapset ID.
-     * @param user Beatmapset ID.
+     * @param beatmapsetId Beatmapset ID.
      * @returns Generated beatmap thumbnail URL.
      */
   generateBeatmapThumbnailURL(beatmapsetId: string | number): string;
@@ -450,6 +450,7 @@ declare abstract class URLScanner {
      * @returns Result of cheking.
      */
   isScoreURL(url?: string | null): boolean;
+  getRulesetIdFromURL(url?: string | null): GameMode | null;
   getBeatmapIdFromURL(url?: string | null): number;
   getScoreIdFromURL(url?: string | null): number;
 }
@@ -764,7 +765,6 @@ declare class BanchoURLScanner extends URLScanner {
      * @returns Result of cheking.
      */
   isBeatmapsetURL(url?: string | null): boolean;
-  getRulesetIdFromURL(url?: string | null): GameMode;
   getBeatmapsetIdFromURL(url?: string | null): number;
 }
 
