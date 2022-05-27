@@ -7,6 +7,7 @@ import {
   type IScoreRequestOptions,
   type IScoreListRequestOptions,
   type IUserRequestOptions,
+  getRulesetShortname,
 } from '@Core';
 
 export class BanchoURLGenerator extends URLGenerator {
@@ -78,8 +79,9 @@ export class BanchoURLGenerator extends URLGenerator {
 
   generateScoreInfoURL(options: IScoreRequestOptions): string {
     const { scoreId, mode } = options;
+    const ruleset = getRulesetShortname(mode);
 
-    return `${this.API_ROOT}/scores/${ mode ?? 'osu' }/${scoreId}`;
+    return `${this.API_ROOT}/scores/${ruleset}/${scoreId}`;
   }
 
   generateUserBestURL(options: IScoreListRequestOptions): string {

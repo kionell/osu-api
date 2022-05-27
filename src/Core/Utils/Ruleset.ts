@@ -32,6 +32,22 @@ export function getRulesetId(input?: string | number | null): GameMode {
 }
 
 /**
+ * Tries to convert input value to ruleset shortname.
+ * @param input Input value.
+ * @returns Ruleset shortname.
+ */
+export function getRulesetShortname(input?: number | null): Lowercase<keyof typeof GameMode> {
+  switch (input) {
+    case GameMode.Osu: return 'osu';
+    case GameMode.Taiko: return 'taiko';
+    case GameMode.Fruits: return 'fruits';
+    case GameMode.Mania: return 'mania';
+  }
+
+  throw new Error('Unknown ruleset!');
+}
+
+/**
  * Tries to create a new ruleset instance by input value.
  * @param input Input value.
  * @returns Ruleset instance.
