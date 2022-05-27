@@ -464,6 +464,12 @@ declare function sortUserBest(scores: IScoreInfo[], order?: SortingType): IScore
  */
 declare function getRulesetId(input?: string | number | null): GameMode;
 /**
+ * Tries to convert input value to ruleset shortname.
+ * @param input Input value.
+ * @returns Ruleset shortname.
+ */
+declare function getRulesetShortname(input?: number | null): Lowercase<keyof typeof GameMode>;
+/**
  * Tries to create a new ruleset instance by input value.
  * @param input Input value.
  * @returns Ruleset instance.
@@ -815,4 +821,4 @@ declare class APIFactory {
 }
 declare const _default: APIFactory;
 
-export { APICache, APIClient, APIClientWithOAuth, _default as APIFactory, AuthTokens, BanchoAPIClient, BanchoAuthTokens, BanchoBeatmapInfo, BanchoCatchDifficultyAttributes, BanchoManiaDifficultyAttributes, BanchoOsuDifficultyAttributes, BanchoScoreInfo, BanchoTaikoDifficultyAttributes, BanchoURLGenerator, BanchoURLScanner, BanchoUserInfo, GameMode, IAPIResponse, IBanchoAuthTokens, IBanchoBeatmap, IBanchoBeatmapCompact, IBanchoBeatmapset, IBanchoBeatmapsetCompact, IBanchoCatchDifficulty, IBanchoDifficulty, IBanchoHitStatistics, IBanchoManiaDifficulty, IBanchoOsuDifficulty, IBanchoScore, IBanchoTaikoDifficulty, IBanchoUser, IBanchoUserCompact, IBeatmapRequestOptions, ICachedResponse, IDifficultyRequestOptions, IHasAttributes, IHasBeatmaps, IHasLeaderboard, IHasRecent, IHasScores, IHasTop, IHasUsers, ILeaderboardRequestOptions, IScoreListRequestOptions, IScoreRequestOptions, IUserRequestOptions, RankStatus, RequestConfig, ScoreType, Server, SortingType, URLGenerator, URLScanner, getRuleset, getRulesetId, getServerName, searchBeatmap, sortUserBest };
+export { APICache, APIClient, APIClientWithOAuth, _default as APIFactory, AuthTokens, BanchoAPIClient, BanchoAuthTokens, BanchoBeatmapInfo, BanchoCatchDifficultyAttributes, BanchoManiaDifficultyAttributes, BanchoOsuDifficultyAttributes, BanchoScoreInfo, BanchoTaikoDifficultyAttributes, BanchoURLGenerator, BanchoURLScanner, BanchoUserInfo, GameMode, IAPIResponse, IBanchoAuthTokens, IBanchoBeatmap, IBanchoBeatmapCompact, IBanchoBeatmapset, IBanchoBeatmapsetCompact, IBanchoCatchDifficulty, IBanchoDifficulty, IBanchoHitStatistics, IBanchoManiaDifficulty, IBanchoOsuDifficulty, IBanchoScore, IBanchoTaikoDifficulty, IBanchoUser, IBanchoUserCompact, IBeatmapRequestOptions, ICachedResponse, IDifficultyRequestOptions, IHasAttributes, IHasBeatmaps, IHasLeaderboard, IHasRecent, IHasScores, IHasTop, IHasUsers, ILeaderboardRequestOptions, IScoreListRequestOptions, IScoreRequestOptions, IUserRequestOptions, RankStatus, RequestConfig, ScoreType, Server, SortingType, URLGenerator, URLScanner, getRuleset, getRulesetId, getRulesetShortname, getServerName, searchBeatmap, sortUserBest };
