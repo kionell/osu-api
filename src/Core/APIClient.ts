@@ -20,7 +20,7 @@ export abstract class APIClient {
   /**
    * An API cache.
    */
-  cache: APICache = new APICache();
+  cache: APICache | null = new APICache();
 
   /**
    * Singleton instances of different clients.
@@ -52,7 +52,7 @@ export abstract class APIClient {
   protected async _request(config: RequestConfig): Promise<IAPIResponse> {
     try {
       const hash = md5(JSON.stringify(config));
-      const cached = this.cache.get(hash);
+      const cached = this.cache?.get(hash);
 
       if (cached) return cached;
 
@@ -67,7 +67,7 @@ export abstract class APIClient {
         error: null,
       };
 
-      this.cache.set(hash, {
+      this.cache?.set(hash, {
         ...result,
         expiresIn: 30000, // 30 seconds
       });
