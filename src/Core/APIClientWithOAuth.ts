@@ -52,19 +52,27 @@ export abstract class APIClientWithOAuth extends APIClient {
   protected async _request(config: RequestConfig): Promise<IAPIResponse> {
     if (!this.isAuthorized) await this.authorize();
 
-    try {
-      return super._request(config);
-    }
-    catch (err: unknown) {
-      const axiosError = err as AxiosError;
-      const status = axiosError?.response?.status;
+    let attempts = 0;
 
-      if (status === 401 && await this.authorize()) {
-        return this._request(config);
+    const request = async(config: RequestConfig): Promise<IAPIResponse> => {
+      try {
+        return super._request(config);
       }
+      catch (err: unknown) {
+        const axiosError = err as AxiosError;
+        const status = axiosError?.response?.status;
 
-      throw err;
-    }
+        if (attempts < 3 && status === 401 && await this.authorize()) {
+          return request(config);
+        }
+
+        attempts++;
+
+        throw err;
+      }
+    };
+
+    return await request(config);
   }
 
   /**
