@@ -61,7 +61,7 @@ declare abstract class APIClient {
   /**
      * An API cache.
      */
-  cache: APICache;
+  cache: APICache | null;
   /**
      * Singleton instances of different clients.
      */
