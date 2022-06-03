@@ -125,11 +125,23 @@ export abstract class URLScanner {
     const params = new URL(url).searchParams;
     const mode = params.get('m') ?? params.get('mode');
 
-    if (mode === '1' || url.includes('taiko')) return GameMode.Taiko;
-    if (mode === '2' || url.includes('fruits')) return GameMode.Fruits;
-    if (mode === '3' || url.includes('mania')) return GameMode.Mania;
+    if (mode === '0' || mode === 'osu' || url.includes('#osu')) {
+      return GameMode.Osu;
+    }
 
-    return GameMode.Osu;
+    if (mode === '1' || mode === 'taiko' || url.includes('#taiko')) {
+      return GameMode.Taiko;
+    }
+
+    if (mode === '2' || mode === 'fruits' || url.includes('#fruits')) {
+      return GameMode.Fruits;
+    }
+
+    if (mode === '3' || mode === 'mania' || url.includes('#mania')) {
+      return GameMode.Mania;
+    }
+
+    return null;
   }
 
   getBeatmapIdFromURL(url?: string | null): number {
