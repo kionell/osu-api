@@ -125,20 +125,23 @@ export abstract class URLScanner {
     const params = new URL(url).searchParams;
     const mode = params.get('m') ?? params.get('mode');
 
-    if (mode === '0' || mode === 'osu' || url.includes('#osu')) {
-      return GameMode.Osu;
+    if (mode === '3' || mode === 'mania') return GameMode.Mania;
+    if (mode === '2' || mode === 'fruits') return GameMode.Fruits;
+    if (mode === '1' || mode === 'taiko') return GameMode.Taiko;
+    if (mode === '0' || mode === 'osu') return GameMode.Osu;
+
+    if (this.isBeatmapURL(url)) {
+      if (url.includes('#mania')) return GameMode.Mania;
+      if (url.includes('#fruits')) return GameMode.Fruits;
+      if (url.includes('#taiko')) return GameMode.Taiko;
+      if (url.includes('#osu')) return GameMode.Osu;
     }
 
-    if (mode === '1' || mode === 'taiko' || url.includes('#taiko')) {
-      return GameMode.Taiko;
-    }
-
-    if (mode === '2' || mode === 'fruits' || url.includes('#fruits')) {
-      return GameMode.Fruits;
-    }
-
-    if (mode === '3' || mode === 'mania' || url.includes('#mania')) {
-      return GameMode.Mania;
+    if (this.isScoreURL(url)) {
+      if (url.includes('mania')) return GameMode.Mania;
+      if (url.includes('fruits')) return GameMode.Fruits;
+      if (url.includes('taiko')) return GameMode.Taiko;
+      if (url.includes('osu')) return GameMode.Osu;
     }
 
     return null;
