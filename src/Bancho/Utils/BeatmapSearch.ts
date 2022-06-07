@@ -37,6 +37,19 @@ export function searchBeatmap(beatmapsets: IBanchoBeatmapset[], query?: string):
       if (keywords.length === 1 && hasSameHash) return beatmap;
 
       const version = beatmap.version.toLowerCase();
+
+      /**
+       * Use next priority:
+       *  1) Difficulty name.
+       *  2) Beatmap creator.
+       *  3) Beatmap title.
+       *  4) Beatmap artist.
+       */
+      if (hasAllKeywords(version, keywords)) return beatmap;
+      if (hasAllKeywords(creator, keywords)) return beatmap;
+      if (hasAllKeywords(title, keywords)) return beatmap;
+      if (hasAllKeywords(artist, keywords)) return beatmap;
+
       const targetName = `${artist} - ${title} (${creator}) [${version}] ${tags}`;
 
       // Found all keywords.
@@ -44,9 +57,9 @@ export function searchBeatmap(beatmapsets: IBanchoBeatmapset[], query?: string):
     }
   }
 
-  // Return most playable difficulty from the first beatmapset if found any.
+  // Return last difficulty from the first beatmapset if found any.
   if (beatmapsets.length && beatmapsets[0].beatmaps?.length) {
-    return beatmapsets[0].beatmaps.sort((a, b) => b.playcount - a.playcount)[0];
+    return beatmapsets[0].beatmaps[beatmapsets[0].beatmaps.length - 1];
   }
 
   return null;
