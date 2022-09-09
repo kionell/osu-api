@@ -23,7 +23,7 @@
   },
   "peerDependencies": {
     "osu-catch-stable": "^3.0.2",
-    "osu-classes": "^1.0.2",
+    "osu-classes": "^1.1.1",
     "osu-mania-stable": "^3.0.2",
     "osu-standard-stable": "^3.0.2",
     "osu-taiko-stable": "^3.0.2"
