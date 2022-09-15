@@ -10,7 +10,8 @@ export class BanchoBeatmapInfo extends BeatmapInfo {
 
     this.id = other.id;
     this.beatmapsetId = other.beatmapset_id;
-    this.creatorId = other.beatmapset?.user_id || other?.user_id || this.creatorId;
+    this.md5 = other.checksum ?? this.md5;
+    this.creatorId = other?.user_id || other.beatmapset?.user_id || this.creatorId;
     this.creator = other.beatmapset?.creator ?? this.creator;
 
     this.title = other.beatmapset?.title ?? this.title;
