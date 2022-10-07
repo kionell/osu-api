@@ -21,13 +21,6 @@
     "axios": "^0.27.2",
     "md5": "^2.3.0"
   },
-  "peerDependencies": {
-    "osu-catch-stable": "^3.0.2",
-    "osu-classes": "^1.1.1",
-    "osu-mania-stable": "^3.0.2",
-    "osu-standard-stable": "^3.0.2",
-    "osu-taiko-stable": "^3.0.2"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-typescript": "^8.3.2",
@@ -46,5 +39,12 @@
     "typedoc": "^0.22.6",
     "typedoc-plugin-missing-exports": "^1.0.0",
     "typescript": "^4.6.4"
+  },
+  "peerDependencies": {
+    "osu-catch-stable": "^3.2.0",
+    "osu-classes": "^2.0.0",
+    "osu-mania-stable": "^3.2.0",
+    "osu-standard-stable": "^4.0.0",
+    "osu-taiko-stable": "^4.0.0"
   }
 }
