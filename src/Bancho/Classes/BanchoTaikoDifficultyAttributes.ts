@@ -9,10 +9,10 @@ export class BanchoTaikoDifficultyAttributes extends TaikoDifficultyAttributes {
     super(combination, other.star_rating);
 
     this.maxCombo = other.max_combo ?? 0;
-    this.staminaStrain = other.stamina_difficulty ?? 0;
-    this.rhythmStrain = other.rhythm_difficulty ?? 0;
-    this.colourStrain = other.colour_difficulty ?? 0;
-    this.approachRate = other.approach_rate ?? 0;
+    this.staminaDifficulty = other.stamina_difficulty ?? 0;
+    this.rhythmDifficulty = other.rhythm_difficulty ?? 0;
+    this.colourDifficulty = other.colour_difficulty ?? 0;
+    this.peakDifficulty = other.peak_difficulty ?? 0;
     this.greatHitWindow = other.great_hit_window ?? 0;
   }
 }
