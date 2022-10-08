@@ -1,6 +1,6 @@
 {
   "name": "@kionell/osu-api",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "API clients for different osu! servers",
   "exports": {
     "import": "./lib/index.mjs",
