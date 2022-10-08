@@ -25,7 +25,16 @@ export abstract class URLGenerator {
    * @returns Generated user URL.
    */
   generateUserURL(user: string | number): string {
-    return `${this.SERVER_ROOT}/u/${user}`;
+    /**
+     * Add %20 in case if user nickname has spaces.
+     * Using underscore for spaces is not an option tho 
+     * as it can be two different people.
+     */
+    const encodedUser = user.toString()
+      .replace(/ /g, '%20')
+      .replace(/\s/g, '');
+
+    return `${this.SERVER_ROOT}/u/${encodedUser}`;
   }
 
   /**
