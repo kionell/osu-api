@@ -1,6 +1,6 @@
 export interface IBanchoUserCompact {
   avatar_url: string;
-  country_code: string;
+  country_code: Uppercase<string>;
   default_group: string;
   id: number;
   is_active: boolean;
