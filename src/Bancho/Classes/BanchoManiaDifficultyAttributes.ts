@@ -10,6 +10,5 @@ export class BanchoManiaDifficultyAttributes extends ManiaDifficultyAttributes {
 
     this.maxCombo = other.max_combo ?? 0;
     this.greatHitWindow = other.great_hit_window ?? 0;
-    this.scoreMultiplier = 1;
   }
 }
