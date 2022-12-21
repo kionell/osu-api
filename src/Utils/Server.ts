@@ -7,7 +7,11 @@ import { BanchoURLScanner } from '../Bancho';
  * @returns Server name or null.
  */
 export function getServerName(input?: string | null): keyof typeof Server | null {
-  if (new BanchoURLScanner().hasServerURL(input)) return 'Bancho';
+  const banchoScanner = new BanchoURLScanner();
+
+  if (banchoScanner.hasServerURL(input)) {
+    return banchoScanner.SERVER_NAME;
+  }
 
   return null;
 }
