@@ -7,7 +7,7 @@ export class BanchoURLScanner extends URLScanner {
   readonly SERVER_NAME = 'Bancho';
 
   readonly BASE_REGEX = new RegExp(''
-    + /^(https?:\/\/)?/.source /* Protocol */
+    + /(https?:\/\/)?/.source /* Protocol */
     + /(old|osu|dev|lazer).ppy.sh/.source, /* Domain */
   );
 
@@ -15,21 +15,21 @@ export class BanchoURLScanner extends URLScanner {
     + this.BASE_REGEX.source /* Base */
     + /\/(u|users)/.source /* Path */
     + /\/[A-z0-9]+/.source /* User ID or nickname*/
-    + /(#(osu|taiko|fruits|mania)|\/(osu|taiko|fruits|mania)){0,1}$/.source, /* Additions */
+    + /(#(osu|taiko|fruits|mania)|\/(osu|taiko|fruits|mania)){0,1}/.source, /* Additions */
   );
 
   readonly BEATMAP_REGEX = new RegExp(''
     + this.BASE_REGEX.source /* Base */
     + /\/(b|beatmaps)/.source /* Path */
     + /\/[0-9]+/.source /* Beatmap ID */
-    + /((\?mode=(osu|taiko|fruits|mania))|(\?m=(0|1|2|3))){0,1}$/.source, /* Mode additions */
+    + /((\?mode=(osu|taiko|fruits|mania))|(\?m=(0|1|2|3))){0,1}/.source, /* Mode additions */
   );
 
   readonly BEATMAPSET_REGEX = new RegExp(''
     + this.BASE_REGEX.source /* Base */
     + /\/(s|beatmapsets)/.source /* Path */
     + /\/[0-9]+/.source /* Beatmapset ID */
-    + /(#(osu|taiko|fruits|mania)){0,1}$/.source, /* Additions */
+    + /(#(osu|taiko|fruits|mania)){0,1}/.source, /* Additions */
   );
 
   readonly BEATMAP_WITH_SET_REGEX = new RegExp(''
@@ -37,58 +37,62 @@ export class BanchoURLScanner extends URLScanner {
     + /\/(s|beatmapsets)/.source /* Path */
     + /\/[0-9]+/.source /* Beatmapset ID */
     + /(#(osu|taiko|fruits|mania)){0,1}/.source /* Additions */
-    + /\/[0-9]+$/.source, /* Beatmap ID */
+    + /\/[0-9]+/.source, /* Beatmap ID */
   );
 
   readonly SCORE_REGEX = new RegExp(''
     + this.BASE_REGEX.source /* Base */
     + /\/scores/.source /* Path */
     + /(\/(osu|taiko|fruits|mania))?/.source /* Mode additions */
-    + /\/[0-9]+$/.source, /* Score ID */
+    + /\/[0-9]+/.source, /* Score ID */
   );
 
   /**
    * Searches for beatmapset URL in the text.
    * @param text Input text.
-   * @returns Result of search.
+   * @returns If input text has beatmapset URL.
    */
   hasBeatmapsetURL(text?: string | null): boolean {
-    return !!text?.split(' ')?.find((arg) => this.isBeatmapsetURL(arg));
+    return !!this.getBeatmapsetURL(text);
   }
 
-  isBeatmapURL(url?: string | null): boolean {
-    if (!url) return false;
-
-    return this.BEATMAP_REGEX.test(url)
-      || this.BEATMAP_WITH_SET_REGEX.test(url);
+  /**
+   * Searches for beatmapset URL in the text.
+   * @param text Input text.
+   * @returns Found beatmapset URL.
+   */
+  getBeatmapsetURL(text?: string | null): string | null {
+    return text?.match(this.BEATMAPSET_REGEX)?.[0] ?? null;
   }
 
-  isBeatmapURLWithRuleset(url?: string | null): boolean {
-    if (!url) return false;
+  isBeatmapURL(text?: string | null): boolean {
+    return text?.match(this.BEATMAP_REGEX)?.index === 0
+      || text?.match(this.BEATMAP_WITH_SET_REGEX)?.index === 0;
+  }
 
-    const isBeatmapURL = this.BEATMAP_REGEX.test(url)
-      || this.BEATMAP_WITH_SET_REGEX.test(url);
+  isBeatmapURLWithRuleset(text?: string | null): boolean {
+    const isBeatmapURL = this.isBeatmapURL(text);
 
-    const params = new URL(url).searchParams;
+    if (!text || !isBeatmapURL) return false;
+
+    const params = new URL(text).searchParams;
     const mode = params.get('m') ?? params.get('mode');
 
-    const hasRuleset = mode === '0' || url.includes('osu')
-      || mode === '1' || url.includes('taiko')
-      || mode === '2' || url.includes('fruits')
-      || mode === '3' || url.includes('mania');
+    const hasRuleset = mode === '0' || text.includes('osu')
+      || mode === '1' || text.includes('taiko')
+      || mode === '2' || text.includes('fruits')
+      || mode === '3' || text.includes('mania');
 
     return isBeatmapURL && hasRuleset;
   }
 
   /**
    * Checks if specified URL is beatmapset URL.
-   * @param url Target URL.
+   * @param text Target URL.
    * @returns Result of cheking.
    */
-  isBeatmapsetURL(url?: string | null): boolean {
-    if (!url) return false;
-
-    return this.BEATMAPSET_REGEX.test(url);
+  isBeatmapsetURL(text?: string | null): boolean {
+    return text?.match(this.BEATMAPSET_REGEX)?.index === 0;
   }
 
   getBeatmapsetIdFromURL(url?: string | null): number {
@@ -98,10 +102,8 @@ export class BanchoURLScanner extends URLScanner {
       return parseInt(url);
     }
 
-    const regex = this.MULTIPLE_ID_REGEX;
-
     if (this.isBeatmapsetURL(url)) {
-      const match = url.match(regex) as RegExpMatchArray;
+      const match = url.match(this.MULTIPLE_ID_REGEX) as RegExpMatchArray;
 
       return parseInt(match[0]);
     }

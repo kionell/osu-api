@@ -45,7 +45,16 @@ export abstract class URLScanner {
    * @returns Result of search.
    */
   hasServerURL(text?: string | null): boolean {
-    return !!text?.split(' ')?.find((arg) => this.isServerURL(arg));
+    return !!this.getServerURL(text);
+  }
+
+  /**
+   * Searches for any server URL in the text.
+   * @param text Input text.
+   * @returns Found server URL.
+   */
+  getServerURL(text?: string | null): string | null {
+    return text?.match(this.BASE_REGEX)?.[0] ?? null;
   }
 
   /**
@@ -54,7 +63,16 @@ export abstract class URLScanner {
    * @returns Result of search.
    */
   hasUserURL(text?: string | null): boolean {
-    return !!text?.split(' ')?.find((arg) => this.isUserURL(arg));
+    return !!this.getUserURL(text);
+  }
+
+  /**
+   * Searches for user URL in the text.
+   * @param text Input text.
+   * @returns Found user URL.
+   */
+  getUserURL(text?: string | null): string | null {
+    return text?.match(this.USER_REGEX)?.[0] ?? null;
   }
 
   /**
@@ -63,7 +81,16 @@ export abstract class URLScanner {
    * @returns Result of search.
    */
   hasBeatmapURL(text?: string | null): boolean {
-    return !!text?.split(' ')?.find((arg) => this.isBeatmapURL(arg));
+    return !!this.getBeatmapURL(text);
+  }
+
+  /**
+   * Searches for beatmap URL in the text.
+   * @param text Input text.
+   * @returns Found beatmap URL.
+   */
+  getBeatmapURL(text?: string | null): string | null {
+    return text?.match(this.BEATMAP_REGEX)?.[0] ?? null;
   }
 
   /**
@@ -72,51 +99,52 @@ export abstract class URLScanner {
    * @returns Result of search.
    */
   hasScoreURL(text?: string | null): boolean {
-    return !!text?.split(' ')?.find((arg) => this.isScoreURL(arg));
+    return !!this.getScoreURL(text);
+  }
+
+  /**
+   * Searches for score URL in the text.
+   * @param text Input text.
+   * @returns Found score URL.
+   */
+  getScoreURL(text?: string | null): string | null {
+    return text?.match(this.SCORE_REGEX)?.[0] ?? null;
   }
 
   /**
    * Checks if specified URL is any server related URL.
-   * @param url Target URL.
+   * @param text Target URL.
    * @returns Result of cheking.
    */
-  isServerURL(url?: string | null): boolean {
-    if (!url) return false;
-
-    return this.BASE_REGEX.test(url);
+  isServerURL(text?: string | null): boolean {
+    return text?.match(this.BASE_REGEX)?.index === 0;
   }
 
   /**
    * Checks if specified URL is user URL.
-   * @param url Target URL.
+   * @param text Target URL.
    * @returns Result of cheking.
    */
-  isUserURL(url?: string | null): boolean {
-    if (!url) return false;
-
-    return this.USER_REGEX.test(url);
+  isUserURL(text?: string | null): boolean {
+    return text?.match(this.USER_REGEX)?.index === 0;
   }
 
   /**
    * Checks if specified URL is beatmap URL.
-   * @param url Target URL.
+   * @param text Target URL.
    * @returns Result of cheking.
    */
-  isBeatmapURL(url?: string | null): boolean {
-    if (!url) return false;
-
-    return this.BEATMAP_REGEX.test(url);
+  isBeatmapURL(text?: string | null): boolean {
+    return text?.match(this.BEATMAP_REGEX)?.index === 0;
   }
 
   /**
    * Checks if specified URL is beatmap URL.
-   * @param url Target URL.
+   * @param text Target URL.
    * @returns Result of cheking.
    */
-  isScoreURL(url?: string | null): boolean {
-    if (!url) return false;
-
-    return this.SCORE_REGEX.test(url);
+  isScoreURL(text?: string | null): boolean {
+    return text?.match(this.SCORE_REGEX)?.index === 0;
   }
 
   getRulesetIdFromURL(url?: string | null): GameMode | null {
@@ -154,12 +182,10 @@ export abstract class URLScanner {
       return parseInt(url);
     }
 
-    const regex = this.MULTIPLE_ID_REGEX;
-
     if (this.isBeatmapURL(url)) {
       const parsedURL = new URL(url);
       const path = parsedURL.pathname + parsedURL.hash;
-      const match = path.match(regex) as RegExpMatchArray;
+      const match = path.match(this.MULTIPLE_ID_REGEX) as RegExpMatchArray;
 
       return parseInt(match[match.length - 1]);
     }
@@ -174,10 +200,8 @@ export abstract class URLScanner {
       return parseInt(url);
     }
 
-    const regex = this.MULTIPLE_ID_REGEX;
-
     if (this.isScoreURL(url)) {
-      const match = url.match(regex) as RegExpMatchArray;
+      const match = url.match(this.MULTIPLE_ID_REGEX) as RegExpMatchArray;
 
       return parseInt(match[match.length - 1]);
     }
