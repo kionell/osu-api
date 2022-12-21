@@ -15,7 +15,9 @@ export function searchBeatmap(beatmapsets: IBanchoBeatmapset[], query?: string):
   for (const beatmapset of beatmapsets) {
     if (!beatmapset.beatmaps) continue;
 
-    const beatmaps = beatmapset.beatmaps;
+    const beatmaps = beatmapset.beatmaps.sort(
+      (a, b) => b.difficulty_rating - a.difficulty_rating,
+    );
 
     const title = beatmapset.title.toLowerCase();
     const artist = beatmapset.artist.toLowerCase();
