@@ -8,7 +8,7 @@ export class BanchoURLScanner extends URLScanner {
 
   readonly BASE_REGEX = new RegExp(''
     + /^(https?:\/\/)?/.source /* Protocol */
-    + /(old|osu).ppy.sh/.source, /* Domain */
+    + /(old|osu|dev|lazer).ppy.sh/.source, /* Domain */
   );
 
   readonly USER_REGEX = new RegExp(''
@@ -43,7 +43,7 @@ export class BanchoURLScanner extends URLScanner {
   readonly SCORE_REGEX = new RegExp(''
     + this.BASE_REGEX.source /* Base */
     + /\/scores/.source /* Path */
-    + /\/(osu|taiko|fruits|mania)/.source /* Mode additions */
+    + /(\/(osu|taiko|fruits|mania))?/.source /* Mode additions */
     + /\/[0-9]+$/.source, /* Score ID */
   );
 
