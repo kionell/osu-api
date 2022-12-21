@@ -7,7 +7,7 @@ export class BanchoURLScanner extends URLScanner {
   readonly SERVER_NAME = 'Bancho';
 
   readonly BASE_REGEX = new RegExp(''
-    + /^((http|https):\/\/)?/.source /* Protocol */
+    + /^(https?:\/\/)?/.source /* Protocol */
     + /(old|osu).ppy.sh/.source, /* Domain */
   );
 
