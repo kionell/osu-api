@@ -16,6 +16,11 @@ import {
  * An API factory.
  */
 class APIFactory {
+  getAPIClient(server?: 'Bancho' | null): BanchoAPIClient;
+  getAPIClient(server: 'Gatari'): APIClient;
+  getAPIClient(server: 'Akatsuki'): APIClient;
+  getAPIClient(server: 'Ripple'): APIClient;
+
   /**
    * Creates a new API client based on a server name.
    * @param server Server name.
@@ -36,21 +41,30 @@ class APIFactory {
     throw new Error('This server is not found or not supported!');
   }
 
+  addCredentials(server: 'Bancho', clientId: string, clientSecret: string): void;
+
   /**
    * Adds credentials to the specific server API.
    * @param server Server name.
    * @param clientId API client ID.
    * @param clientSecret API client secret.
    */
-  addCredentials(server?: keyof typeof Server | null, clientId?: string, clientSecret?: string): void {
+  addCredentials(server: 'Bancho', ...credentials: string[]): void {
     const client = this.getAPIClient(server) as APIClientWithOAuth;
 
     if (!client.addCredentials) {
       throw new Error('This server API does not require any authorization!');
     }
 
-    client.addCredentials(clientId, clientSecret);
+    switch (server) {
+      case 'Bancho': client.addCredentials(credentials[0], credentials[1]);
+    }
   }
+
+  createURLScanner(server?: 'Bancho' | null): BanchoURLScanner;
+  createURLScanner(server: 'Gatari'): URLScanner;
+  createURLScanner(server: 'Akatsuki'): URLScanner;
+  createURLScanner(server: 'Ripple'): URLScanner;
 
   /**
    * Creates a new instance of URL scanner based on a server name.
@@ -71,6 +85,11 @@ class APIFactory {
 
     throw new Error('This server is not found or not supported!');
   }
+
+  createURLGenerator(server?: 'Bancho' | null): BanchoURLGenerator;
+  createURLGenerator(server: 'Gatari'): URLGenerator;
+  createURLGenerator(server: 'Akatsuki'): URLGenerator;
+  createURLGenerator(server: 'Ripple'): URLGenerator;
 
   /**
    * Creates a new instance of URL generator based on a server name.
