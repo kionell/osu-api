@@ -23,20 +23,20 @@ export function searchBeatmap(beatmapsets: IBanchoBeatmapset[], query?: string):
     const tags = beatmapset.tags.toLowerCase();
 
     // Search through every beatmap in the beatmapset.
-    for (const beatmap of beatmaps) {
-      beatmap.beatmapset = beatmapset;
+    for (let i = beatmaps.length - 1; i >= 0; --i) {
+      beatmaps[i].beatmapset = beatmapset;
 
-      const hasSameId = parseInt(keywords[0]) === beatmap.id;
+      const hasSameId = parseInt(keywords[0]) === beatmaps[i].id;
 
       // Found by exact match of beatmap ID.
-      if (keywords.length === 1 && hasSameId) return beatmap;
+      if (keywords.length === 1 && hasSameId) return beatmaps[i];
 
-      const hasSameHash = keywords[0] === beatmap.checksum?.toLowerCase();
+      const hasSameHash = keywords[0] === beatmaps[i].checksum?.toLowerCase();
 
       // Found by exact match of beatmap hash.
-      if (keywords.length === 1 && hasSameHash) return beatmap;
+      if (keywords.length === 1 && hasSameHash) return beatmaps[i];
 
-      const version = beatmap.version.toLowerCase();
+      const version = beatmaps[i].version.toLowerCase();
 
       /**
        * Use next priority:
@@ -45,15 +45,15 @@ export function searchBeatmap(beatmapsets: IBanchoBeatmapset[], query?: string):
        *  3) Beatmap title.
        *  4) Beatmap artist.
        */
-      if (hasAllKeywords(version, keywords)) return beatmap;
-      if (hasAllKeywords(creator, keywords)) return beatmap;
-      if (hasAllKeywords(title, keywords)) return beatmap;
-      if (hasAllKeywords(artist, keywords)) return beatmap;
+      if (hasAllKeywords(version, keywords)) return beatmaps[i];
+      if (hasAllKeywords(creator, keywords)) return beatmaps[i];
+      if (hasAllKeywords(title, keywords)) return beatmaps[i];
+      if (hasAllKeywords(artist, keywords)) return beatmaps[i];
 
       const targetName = `${artist} - ${title} (${creator}) [${version}] ${tags}`;
 
       // Found all keywords.
-      if (hasAllKeywords(targetName, keywords)) return beatmap;
+      if (hasAllKeywords(targetName, keywords)) return beatmaps[i];
     }
   }
 
