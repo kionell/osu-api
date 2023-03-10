@@ -130,6 +130,12 @@ export class BanchoURLGenerator extends URLGenerator {
     return `${url}?${query}`;
   }
 
+  generateAvatarURL(userId: string | number): string {
+    return userId
+      ? `${this.AVATARS_ROOT}/${userId}`
+      : `${this.SERVER_ROOT}/images/layout/avatar-guest.png`;
+  }
+
   generateUserInfoURL(options: IUserRequestOptions): string {
     const { user, mode } = options;
 
