@@ -43,7 +43,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   /**
    * Bancho URL generator.
    */
-  readonly urlGenerator = new BanchoURLGenerator();
+  private readonly _urlGenerator = new BanchoURLGenerator();
 
   /**
    * Cached pairs of username & user ID.
@@ -62,7 +62,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     }
 
     // https://osu.ppy.sh/oauth/token
-    const url = this.urlGenerator.generateTokenURL();
+    const url = this._urlGenerator.generateTokenURL();
 
     const data = {
       client_id: this._clientId,
@@ -89,7 +89,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
 
   async getBeatmap(options?: IBeatmapRequestOptions): Promise<BanchoBeatmapInfo | null> {
     if (options?.beatmapId || options?.hash) {
-      const url = this.urlGenerator.generateBeatmapInfoURL(options);
+      const url = this._urlGenerator.generateBeatmapInfoURL(options);
       const response = await this._request({ url });
 
       if (response.data === null) return null;
@@ -98,7 +98,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     }
 
     if (options?.search) {
-      const url = this.urlGenerator.generateBeatmapsetSearchURL(options);
+      const url = this._urlGenerator.generateBeatmapsetSearchURL(options);
       const response = await this._request({ url });
 
       if (response.data === null) return null;
@@ -116,7 +116,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   async getScore(options?: IScoreRequestOptions): Promise<BanchoScoreInfo | null> {
     if (!options?.scoreId) return null;
 
-    const url = this.urlGenerator.generateScoreInfoURL(options);
+    const url = this._urlGenerator.generateScoreInfoURL(options);
     const response = await this._request({ url });
 
     if (response.data === null) return null;
@@ -133,7 +133,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
       options.user = await this._getUserId(options.user);
     }
 
-    const url = this.urlGenerator.generateBeatmapScoresURL(options);
+    const url = this._urlGenerator.generateBeatmapScoresURL(options);
 
     return this._getScores(url);
   }
@@ -141,7 +141,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   async getUserBest(options?: IScoreListRequestOptions): Promise<BanchoScoreInfo[]> {
     if (!options?.user) return [];
 
-    const url = this.urlGenerator.generateUserBestURL({
+    const url = this._urlGenerator.generateUserBestURL({
       ...options,
       user: await this._getUserId(options.user),
     });
@@ -152,7 +152,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   async getUserRecent(options?: IScoreListRequestOptions): Promise<BanchoScoreInfo[]> {
     if (!options?.user) return [];
 
-    const url = this.urlGenerator.generateUserRecentURL({
+    const url = this._urlGenerator.generateUserRecentURL({
       ...options,
       user: await this._getUserId(options.user),
     });
@@ -163,7 +163,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   async getUser(options?: IUserRequestOptions): Promise<BanchoUserInfo | null> {
     if (!options?.user) return null;
 
-    const url = this.urlGenerator.generateUserInfoURL(options);
+    const url = this._urlGenerator.generateUserInfoURL(options);
     const response = await this._request({ url });
 
     if (response.data === null) return null;
@@ -174,7 +174,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
   async getDifficulty(options?: IDifficultyRequestOptions): Promise<DifficultyAttributes | null> {
     if (!options?.beatmapId) return null;
 
-    const url = this.urlGenerator.generateDifficultyURL(options);
+    const url = this._urlGenerator.generateDifficultyURL(options);
     const data = {
       mods: options.mods?.toString(),
       ruleset_id: options.mode,
