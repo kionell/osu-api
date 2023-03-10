@@ -1,23 +1,20 @@
-import {
-  type APIClient,
-  type APIClientWithOAuth,
-  type URLGenerator,
-  type URLScanner,
+import type {
+  APIClient,
+  APIClientWithOAuth,
+  URLGenerator,
+  URLScanner,
   Server,
 } from '@Core';
 
-import {
-  BanchoAPIClient,
-  BanchoURLGenerator,
-  BanchoURLScanner,
-} from './Bancho';
+import * as Bancho from './Bancho';
+import * as Gatari from './Gatari';
 
 /**
  * An API factory.
  */
 class APIFactory {
   getAPIClient(server?: keyof typeof Server | null): APIClient;
-  getAPIClient(server: 'Bancho'): BanchoAPIClient;
+  getAPIClient(server: 'Bancho'): Bancho.BanchoAPIClient;
   getAPIClient(server: 'Gatari'): APIClient;
   getAPIClient(server: 'Akatsuki'): APIClient;
   getAPIClient(server: 'Ripple'): APIClient;
@@ -29,14 +26,14 @@ class APIFactory {
    */
   getAPIClient(server?: keyof typeof Server | null): APIClient {
     if (server === null || server === undefined) {
-      return BanchoAPIClient.getInstance();
+      return Bancho.BanchoAPIClient.getInstance();
     }
 
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
       case 'gatari':
-      case 'bancho': return BanchoAPIClient.getInstance();
+      case 'bancho': return Bancho.BanchoAPIClient.getInstance();
     }
 
     throw new Error('This server is not found or not supported!');
@@ -63,7 +60,7 @@ class APIFactory {
   }
 
   createURLScanner(server?: keyof typeof Server | null): URLScanner;
-  createURLScanner(server: 'Bancho'): BanchoURLScanner;
+  createURLScanner(server: 'Bancho'): Bancho.BanchoURLScanner;
   createURLScanner(server: 'Gatari'): URLScanner;
   createURLScanner(server: 'Akatsuki'): URLScanner;
   createURLScanner(server: 'Ripple'): URLScanner;
@@ -75,21 +72,21 @@ class APIFactory {
    */
   createURLScanner(server?: keyof typeof Server | null): URLScanner {
     if (server === null || server === undefined) {
-      return new BanchoURLScanner();
+      return new Bancho.BanchoURLScanner();
     }
 
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
-      case 'gatari':
-      case 'bancho': return new BanchoURLScanner();
+      case 'gatari': return new Gatari.GatariURLScanner();
+      case 'bancho': return new Bancho.BanchoURLScanner();
     }
 
     throw new Error('This server is not found or not supported!');
   }
 
   createURLGenerator(server?: keyof typeof Server | null): URLGenerator;
-  createURLGenerator(server: 'Bancho'): BanchoURLGenerator;
+  createURLGenerator(server: 'Bancho'): Bancho.BanchoURLGenerator;
   createURLGenerator(server: 'Gatari'): URLGenerator;
   createURLGenerator(server: 'Akatsuki'): URLGenerator;
   createURLGenerator(server: 'Ripple'): URLGenerator;
@@ -101,14 +98,14 @@ class APIFactory {
    */
   createURLGenerator(server?: keyof typeof Server | null): URLGenerator {
     if (server === null || server === undefined) {
-      return new BanchoURLGenerator();
+      return new Bancho.BanchoURLGenerator();
     }
 
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
-      case 'gatari':
-      case 'bancho': return new BanchoURLGenerator();
+      case 'gatari': return new Gatari.GatariURLGenerator();
+      case 'bancho': return new Bancho.BanchoURLGenerator();
     }
 
     throw new Error('This server is not found or not supported!');
