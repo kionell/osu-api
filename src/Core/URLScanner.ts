@@ -1,14 +1,9 @@
-import { GameMode, Server } from './Enums';
+import { GameMode } from './Enums';
 
 /**
  * Abstract URL scanner.
  */
 export abstract class URLScanner {
-  /**
-   * Name of this server.
-   */
-  abstract readonly SERVER_NAME: keyof typeof Server;
-
   /**
    * This regex is for matching signle number ID.
    */

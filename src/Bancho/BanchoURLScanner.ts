@@ -1,11 +1,6 @@
 import { URLScanner } from '@Core';
 
 export class BanchoURLScanner extends URLScanner {
-  /**
-   * Name of this server.
-   */
-  readonly SERVER_NAME = 'Bancho';
-
   readonly BASE_REGEX = new RegExp(''
     + /(https?:\/\/)?/.source /* Protocol */
     + /(old|osu|dev|lazer).ppy.sh/.source, /* Domain */
