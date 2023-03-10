@@ -1,4 +1,4 @@
-import { URLScanner } from '@Core';
+import { GameMode, URLScanner } from '@Core';
 
 export class BanchoURLScanner extends URLScanner {
   readonly BASE_REGEX = new RegExp(''
@@ -41,6 +41,24 @@ export class BanchoURLScanner extends URLScanner {
     + /(\/(osu|taiko|fruits|mania))?/.source /* Mode additions */
     + /\/[0-9]+/.source, /* Score ID */
   );
+
+  /**
+   * Searches for score URL in the text.
+   * @param text Input text.
+   * @returns Result of search.
+   */
+  hasScoreURL(text?: string | null): boolean {
+    return !!this.getScoreURL(text);
+  }
+
+  /**
+     * Searches for score URL in the text.
+     * @param text Input text.
+     * @returns Found score URL.
+     */
+  getScoreURL(text?: string | null): string | null {
+    return text?.match(this.SCORE_REGEX)?.[0] ?? null;
+  }
 
   /**
    * Searches for beatmapset URL in the text.
@@ -89,6 +107,14 @@ export class BanchoURLScanner extends URLScanner {
   isBeatmapsetURL(text?: string | null): boolean {
     return text?.match(this.BEATMAPSET_REGEX)?.index === 0;
   }
+  /**
+   * Checks if specified URL is beatmap URL.
+   * @param text Target URL.
+   * @returns Result of cheking.
+   */
+  isScoreURL(text?: string | null): boolean {
+    return text?.match(this.SCORE_REGEX)?.index === 0;
+  }
 
   getBeatmapsetIdFromURL(url?: string | null): number {
     if (!url) return 0;
@@ -104,5 +130,38 @@ export class BanchoURLScanner extends URLScanner {
     }
 
     return 0;
+  }
+
+  getScoreIdFromURL(url?: string | null): number {
+    if (!url) return 0;
+
+    if (this.RAW_ID_REGEX.test(url)) {
+      return parseInt(url);
+    }
+
+    if (this.isScoreURL(url)) {
+      const match = url.match(this.MULTIPLE_ID_REGEX) as RegExpMatchArray;
+
+      return parseInt(match[match.length - 1]);
+    }
+
+    return 0;
+  }
+
+  getRulesetIdFromURL(url?: string | null): GameMode | null {
+    if (!url || !this.isServerURL(url)) return null;
+
+    const rulesetId = super.getRulesetIdFromURL(url);
+
+    if (rulesetId !== null) return rulesetId;
+
+    if (this.isScoreURL(url)) {
+      if (url.includes('mania')) return GameMode.Mania;
+      if (url.includes('fruits')) return GameMode.Fruits;
+      if (url.includes('taiko')) return GameMode.Taiko;
+      if (url.includes('osu')) return GameMode.Osu;
+    }
+
+    return null;
   }
 }
