@@ -31,15 +31,6 @@ export class BanchoURLGenerator extends URLGenerator {
    */
   readonly AUTHORIZE_ROOT = `${this.SERVER_ROOT}/oauth/authorize`;
 
-  /**
-   * Generates a beatmapset URL by beatmapset ID.
-   * @param user Beatmapset ID.
-   * @returns Generated beatmapset URL.
-   */
-  generateBeatmapsetURL(beatmapsetId: string | number): string {
-    return `${this.SERVER_ROOT}/s/${beatmapsetId}`;
-  }
-
   generateTokenURL(): string {
     return this.TOKEN_ROOT;
   }

@@ -28,7 +28,7 @@ export abstract class URLGenerator {
     /**
      * Add %20 in case if user nickname has spaces.
      * Using underscore for spaces is not an option tho 
-     * as it can be two different people.
+     * as it can lead to a different player.
      */
     const encodedUser = user.toString()
       .replace(/ /g, '%20')
@@ -45,11 +45,24 @@ export abstract class URLGenerator {
   generateBeatmapURL(beatmapId: string | number, rulesetId?: GameMode): string {
     const url = new URL(`${this.SERVER_ROOT}/b/${beatmapId}`);
 
+    /**
+     * Append ruleset ID as a query parameter at the end of beatmap URL.
+     * It seems that query params are common between all of the servers.
+     */
     if (typeof rulesetId === 'number') {
       url.searchParams.append('m', rulesetId.toString());
     }
 
     return url.toString();
+  }
+
+  /**
+   * Generates a beatmapset URL by beatmapset ID.
+   * @param user Beatmapset ID.
+   * @returns Generated beatmapset URL.
+   */
+  generateBeatmapsetURL(beatmapsetId: string | number): string {
+    return `${this.SERVER_ROOT}/s/${beatmapsetId}`;
   }
 
   /**
@@ -63,6 +76,7 @@ export abstract class URLGenerator {
 
   /**
    * Generates a beatmap cover URL by beatmapset ID.
+   * Bancho assets are used by every osu! server.
    * @param beatmapsetId Beatmapset ID.
    * @returns Generated beatmap cover URL.
    */
@@ -72,6 +86,7 @@ export abstract class URLGenerator {
 
   /**
    * Generates a beatmap thumbnail URL by beatmapset ID.
+   * Bancho assets are used by every osu! server.
    * @param beatmapsetId Beatmapset ID.
    * @returns Generated beatmap thumbnail URL.
    */
