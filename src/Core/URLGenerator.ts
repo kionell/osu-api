@@ -7,17 +7,17 @@ export abstract class URLGenerator {
   /**
    * Base link to the osu! website.
    */
-  readonly SERVER_ROOT = 'https://osu.ppy.sh';
+  abstract readonly SERVER_ROOT: string;
+
+  /**
+   * Base link to the osu! avatars.
+   */
+  abstract readonly AVATARS_ROOT: string;
 
   /**
    * Base link to the osu! beatmap assets.
    */
   readonly ASSETS_ROOT = 'https://assets.ppy.sh';
-
-  /**
-   * Base link to the osu! avatars.
-   */
-  readonly AVATARS_ROOT = 'https://a.ppy.sh';
 
   /**
    * Generates a user profile URL by user ID or username.
@@ -71,7 +71,7 @@ export abstract class URLGenerator {
    * @returns Generated user avatar URL.
    */
   generateAvatarURL(userId: string | number): string {
-    return `${this.AVATARS_ROOT}/${userId}`;
+    return `${this.AVATARS_ROOT}/${userId ?? 0}`;
   }
 
   /**
