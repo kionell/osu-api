@@ -30,9 +30,9 @@ export abstract class URLScanner {
   abstract readonly BEATMAP_REGEX: RegExp;
 
   /**
-   * Regex for matching beatmap endpoint of the server.
+   * Regex for matching beatmapset endpoint of the server.
    */
-  abstract readonly SCORE_REGEX: RegExp;
+  abstract readonly BEATMAPSET_REGEX: RegExp;
 
   /**
    * Searches for any server URL in the text.
@@ -71,6 +71,24 @@ export abstract class URLScanner {
   }
 
   /**
+   * Searches for beatmapset URL in the text.
+   * @param text Input text.
+   * @returns If input text has beatmapset URL.
+   */
+  hasBeatmapsetURL(text?: string | null): boolean {
+    return !!this.getBeatmapsetURL(text);
+  }
+
+  /**
+   * Searches for beatmapset URL in the text.
+   * @param text Input text.
+   * @returns Found beatmapset URL.
+   */
+  getBeatmapsetURL(text?: string | null): string | null {
+    return text?.match(this.BEATMAPSET_REGEX)?.[0] ?? null;
+  }
+
+  /**
    * Searches for user URL in the text.
    * @param text Input text.
    * @returns Result of search.
@@ -106,6 +124,28 @@ export abstract class URLScanner {
     return text?.match(this.BEATMAP_REGEX)?.index === 0;
   }
 
+  isBeatmapURLWithRuleset(text?: string | null): boolean {
+    const isBeatmapURL = this.isBeatmapURL(text);
+
+    if (!text || !isBeatmapURL) return false;
+
+    const params = new URL(text).searchParams;
+    const m = params.get('m');
+
+    const hasRuleset = m === '0' || m === '1' || m === '2' || m === '3';
+
+    return isBeatmapURL && hasRuleset;
+  }
+
+  /**
+   * Checks if specified URL is beatmapset URL.
+   * @param text Target URL.
+   * @returns Result of cheking.
+   */
+  isBeatmapsetURL(text?: string | null): boolean {
+    return text?.match(this.BEATMAPSET_REGEX)?.index === 0;
+  }
+
   /**
    * Checks if specified URL is an user URL.
    * @param text Target URL.
@@ -128,6 +168,22 @@ export abstract class URLScanner {
       const match = path.match(this.MULTIPLE_ID_REGEX) as RegExpMatchArray;
 
       return parseInt(match[match.length - 1]);
+    }
+
+    return 0;
+  }
+
+  getBeatmapsetIdFromURL(url?: string | null): number {
+    if (!url) return 0;
+
+    if (this.RAW_ID_REGEX.test(url)) {
+      return parseInt(url);
+    }
+
+    if (this.isBeatmapsetURL(url)) {
+      const match = url.match(this.MULTIPLE_ID_REGEX) as RegExpMatchArray;
+
+      return parseInt(match[0]);
     }
 
     return 0;

@@ -60,24 +60,6 @@ export class BanchoURLScanner extends URLScanner {
     return text?.match(this.SCORE_REGEX)?.[0] ?? null;
   }
 
-  /**
-   * Searches for beatmapset URL in the text.
-   * @param text Input text.
-   * @returns If input text has beatmapset URL.
-   */
-  hasBeatmapsetURL(text?: string | null): boolean {
-    return !!this.getBeatmapsetURL(text);
-  }
-
-  /**
-   * Searches for beatmapset URL in the text.
-   * @param text Input text.
-   * @returns Found beatmapset URL.
-   */
-  getBeatmapsetURL(text?: string | null): string | null {
-    return text?.match(this.BEATMAPSET_REGEX)?.[0] ?? null;
-  }
-
   isBeatmapURL(text?: string | null): boolean {
     return text?.match(this.BEATMAP_REGEX)?.index === 0
       || text?.match(this.BEATMAP_WITH_SET_REGEX)?.index === 0;
@@ -99,14 +81,6 @@ export class BanchoURLScanner extends URLScanner {
     return isBeatmapURL && hasRuleset;
   }
 
-  /**
-   * Checks if specified URL is beatmapset URL.
-   * @param text Target URL.
-   * @returns Result of cheking.
-   */
-  isBeatmapsetURL(text?: string | null): boolean {
-    return text?.match(this.BEATMAPSET_REGEX)?.index === 0;
-  }
   /**
    * Checks if specified URL is beatmap URL.
    * @param text Target URL.
