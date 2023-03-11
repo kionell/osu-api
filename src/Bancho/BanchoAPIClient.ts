@@ -149,6 +149,17 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     return this._getScores(url);
   }
 
+  async getUserFirsts(options?: IScoreListRequestOptions): Promise<BanchoScoreInfo[]> {
+    if (!options?.user) return [];
+
+    const url = this._urlGenerator.generateUserFirstsURL({
+      ...options,
+      user: await this._getUserId(options.user),
+    });
+
+    return this._getScores(url);
+  }
+
   async getUserRecent(options?: IScoreListRequestOptions): Promise<BanchoScoreInfo[]> {
     if (!options?.user) return [];
 
