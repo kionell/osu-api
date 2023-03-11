@@ -1,5 +1,7 @@
+import { GameMode } from '../Enums';
+
 export interface IDifficultyRequestOptions {
   beatmapId: string | number;
-  mode?: number;
+  mode?: GameMode;
   mods?: string | number;
 }

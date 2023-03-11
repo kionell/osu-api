@@ -1,8 +1,10 @@
+import { GameMode } from '../Enums';
+
 export interface IScoreListRequestOptions {
   user: string | number;
-  mode?: number,
+  mode?: GameMode;
   mods?: string | number;
-  limit?: number,
-  offset?: number,
+  limit?: number;
+  offset?: number;
   includeFails?: boolean;
 }

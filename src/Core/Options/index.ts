@@ -1,6 +1,6 @@
 export * from './IBeatmapRequestOptions';
-export * from './ILeaderboardRequestOptions';
 export * from './IDifficultyRequestOptions';
+export * from './ILeaderboardRequestOptions';
 export * from './IScoreListRequestOptions';
 export * from './IScoreRequestOptions';
 export * from './IUserRequestOptions';

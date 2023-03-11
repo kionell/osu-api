@@ -1,4 +1,6 @@
+import { GameMode } from '../Enums';
+
 export interface IUserRequestOptions {
-  user: string | number,
-  mode?: number,
+  user: string | number;
+  mode?: GameMode;
 }

@@ -1,4 +1,6 @@
+import { GameMode } from '../Enums';
+
 export interface IScoreRequestOptions {
-  scoreId: string | number,
-  mode?: number,
+  scoreId: string | number;
+  mode?: GameMode;
 }
