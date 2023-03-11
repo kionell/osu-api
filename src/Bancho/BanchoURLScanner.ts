@@ -3,7 +3,7 @@ import { GameMode, URLScanner } from '@Core';
 export class BanchoURLScanner extends URLScanner {
   readonly BASE_REGEX = new RegExp(''
     + /(https?:\/\/)?/.source /* Protocol */
-    + /(old|osu|dev|lazer).ppy.sh/.source, /* Domain */
+    + /(old|osu|dev|lazer)\.ppy\.sh/.source, /* Domain */
   );
 
   readonly USER_REGEX = new RegExp(''
