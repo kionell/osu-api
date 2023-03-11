@@ -17,6 +17,11 @@ export class BanchoURLGenerator extends URLGenerator {
   readonly SERVER_ROOT = 'https://osu.ppy.sh';
 
   /**
+   * Base link to the osu! avatars.
+   */
+  readonly AVATARS_ROOT = 'https://a.ppy.sh';
+
+  /**
    * Base link to the osu! api v2.
    */
   readonly API_ROOT = `${this.SERVER_ROOT}/api/v2`;
@@ -61,15 +66,12 @@ export class BanchoURLGenerator extends URLGenerator {
   }
 
   generateBeatmapsetSearchURL(options: IBeatmapRequestOptions): string {
-    const { search } = options;
-
-    const base = this.API_ROOT;
-
-    return `${base}/beatmapsets/search?q=${search}&s=any`;
+    return `${this.API_ROOT}/beatmapsets/search?q=${options.search}&s=any`;
   }
 
   generateScoreInfoURL(options: IScoreRequestOptions): string {
     const { scoreId, mode } = options;
+
     const ruleset = getRulesetShortname(mode);
 
     return `${this.API_ROOT}/scores/${ruleset}/${scoreId}`;
@@ -79,25 +81,35 @@ export class BanchoURLGenerator extends URLGenerator {
     return this._generateUserScoresURL(options, ScoreType.Best);
   }
 
-  generateUserRecentURL(options: IScoreListRequestOptions): string {
-    return this._generateUserScoresURL(options, ScoreType.Best);
-  }
-
   generateUserFirstsURL(options: IScoreListRequestOptions): string {
     return this._generateUserScoresURL(options, ScoreType.Firsts);
   }
 
-  private _generateUserScoresURL(options: IScoreListRequestOptions, type: ScoreType): string {
-    const { user, mode, limit, offset } = options ?? {};
+  generateUserRecentURL(options: IScoreListRequestOptions): string {
+    return this._generateUserScoresURL(options, ScoreType.Recent);
+  }
 
-    const base = this.API_ROOT;
+  private _generateUserScoresURL(options: IScoreListRequestOptions, type: ScoreType): string {
+    const { user, mode, limit, offset, includeFails } = options ?? {};
+
+    const getDisplayScoreType = () => {
+      switch (type) {
+        case ScoreType.Best: return 'best';
+        case ScoreType.Firsts: return 'firsts';
+        case ScoreType.Recent: return 'recent';
+      }
+    };
+
     const query = new URLSearchParams();
 
-    if (mode) query.append('mode', mode.toString());
+    if (mode) query.append('mode', getRulesetShortname(mode));
     if (limit) query.append('limit', limit.toString());
     if (offset) query.append('offset', offset.toString());
+    if (includeFails) query.append('include_fails', '1');
 
-    return `${base}/users/${user}/scores/${type}?${query}`;
+    const scoreType = getDisplayScoreType();
+
+    return `${this.API_ROOT}/users/${user}/scores/${scoreType}?${query}`;
   }
 
   generateBeatmapScoresURL(options: ILeaderboardRequestOptions): string {
@@ -106,36 +118,41 @@ export class BanchoURLGenerator extends URLGenerator {
     const base = user ? this.API_ROOT : this.SERVER_ROOT;
     const query = new URLSearchParams();
 
-    if (mode) query.append('mode', mode.toString());
+    if (mode) query.append('mode', getRulesetShortname(mode));
+
+    let url = `${base}/beatmaps/${beatmapId}/scores`;
+
+    if (user) url += `/users/${user}`;
 
     if (mods) {
       const acronyms = mods.match(/.{1,2}/g);
 
       acronyms?.forEach((acronym) => query.append('mods[]', acronym));
     }
-
-    let url = `${base}/beatmaps/${beatmapId}/scores`;
-
-    if (user) url += `/users/${user}/all`;
+    else {
+      url += '/all';
+    }
 
     return `${url}?${query}`;
-  }
-
-  generateAvatarURL(userId: string | number): string {
-    return userId
-      ? `${this.AVATARS_ROOT}/${userId}`
-      : `${this.SERVER_ROOT}/images/layout/avatar-guest.png`;
   }
 
   generateUserInfoURL(options: IUserRequestOptions): string {
     const { user, mode } = options;
 
-    return `${this.API_ROOT}/users/${user}/${mode ?? 'osu'}?key=in`;
+    const ruleset = getRulesetShortname(mode);
+
+    return `${this.API_ROOT}/users/${user}/${ruleset}?key=in`;
   }
 
   generateDifficultyURL(options: IDifficultyRequestOptions): string {
     const { beatmapId } = options;
 
     return `${this.API_ROOT}/beatmaps/${beatmapId}/attributes`;
+  }
+
+  generateAvatarURL(userId: string | number): string {
+    return userId
+      ? `${this.AVATARS_ROOT}/${userId}`
+      : `${this.SERVER_ROOT}/images/layout/avatar-guest.png`;
   }
 }
