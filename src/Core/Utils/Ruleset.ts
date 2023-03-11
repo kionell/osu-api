@@ -11,9 +11,11 @@ import { GameMode } from '../Enums';
  * @returns Ruleset ID.
  */
 export function getRulesetId(input?: string | number | null): GameMode {
-  const value = typeof input === 'string' ? input.toLowerCase() : input;
+  if (input === null || input === undefined) {
+    return GameMode.Osu;
+  }
 
-  switch (value) {
+  switch (typeof input === 'string' ? input.toLowerCase() : input) {
     case GameMode.Osu:
     case 'standard':
     case 'std':
@@ -37,6 +39,10 @@ export function getRulesetId(input?: string | number | null): GameMode {
  * @returns Ruleset shortname.
  */
 export function getRulesetShortname(input?: number | null): Lowercase<keyof typeof GameMode> {
+  if (input === null || input === undefined) {
+    return 'osu';
+  }
+
   switch (input) {
     case GameMode.Osu: return 'osu';
     case GameMode.Taiko: return 'taiko';
