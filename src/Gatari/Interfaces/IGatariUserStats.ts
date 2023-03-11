@@ -1,0 +1,32 @@
+export interface IGatariUserStats {
+  a_count: number;
+  avg_accuracy: number;
+  avg_accuracy_ap: number;
+  avg_accuracy_rx: number;
+  avg_hits_play: number;
+  country_rank: number;
+  country_rank_ap: number;
+  country_rank_rx: number;
+  id: number;
+  level: number;
+  level_progress: number;
+  max_combo: number;
+  playcount: number;
+  playtime: number;
+  pp: number;
+  pp_4k: number;
+  pp_7k: number;
+  pp_ap: number;
+  pp_rx: number;
+  rank: number;
+  rank_ap: number | null;
+  rank_rx: number | null;
+  ranked_score: number;
+  replays_watched: number;
+  s_count: number;
+  sh_count: number;
+  total_hits: number;
+  total_score: number;
+  x_count: number;
+  xh_count: number;
+}

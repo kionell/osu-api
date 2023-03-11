@@ -32,7 +32,7 @@ class APIFactory {
     switch (server?.toLowerCase()) {
       case 'akatsuki':
       case 'ripple':
-      case 'gatari':
+      case 'gatari': return Gatari.GatariAPIClient.getInstance();
       case 'bancho': return Bancho.BanchoAPIClient.getInstance();
     }
 
