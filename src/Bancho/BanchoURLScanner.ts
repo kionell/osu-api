@@ -10,28 +10,28 @@ export class BanchoURLScanner extends URLScanner {
     + this.BASE_REGEX.source /* Base */
     + /\/(u|users)/.source /* Path */
     + /\/[A-z0-9]+/.source /* User ID or nickname*/
-    + /(#(osu|taiko|fruits|mania)|\/(osu|taiko|fruits|mania)){0,1}/.source, /* Additions */
+    + /(#(osu|taiko|fruits|mania)|\/(osu|taiko|fruits|mania))?/.source, /* Additions */
   );
 
   readonly BEATMAP_REGEX = new RegExp(''
     + this.BASE_REGEX.source /* Base */
     + /\/(b|beatmaps)/.source /* Path */
     + /\/[0-9]+/.source /* Beatmap ID */
-    + /((\?mode=(osu|taiko|fruits|mania))|(\?m=(0|1|2|3))){0,1}/.source, /* Mode additions */
+    + /((\?mode=(osu|taiko|fruits|mania))|(\?m=(0|1|2|3)))?/.source, /* Mode additions */
   );
 
   readonly BEATMAPSET_REGEX = new RegExp(''
     + this.BASE_REGEX.source /* Base */
     + /\/(s|beatmapsets)/.source /* Path */
     + /\/[0-9]+/.source /* Beatmapset ID */
-    + /(#(osu|taiko|fruits|mania)){0,1}/.source, /* Additions */
+    + /(#(osu|taiko|fruits|mania))?/.source, /* Additions */
   );
 
   readonly BEATMAP_WITH_SET_REGEX = new RegExp(''
     + this.BASE_REGEX.source /* Base */
     + /\/(s|beatmapsets)/.source /* Path */
     + /\/[0-9]+/.source /* Beatmapset ID */
-    + /(#(osu|taiko|fruits|mania)){0,1}/.source /* Additions */
+    + /(#(osu|taiko|fruits|mania))?/.source /* Additions */
     + /\/[0-9]+/.source, /* Beatmap ID */
   );
 
