@@ -58,7 +58,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
     if (this.isAuthorized) return true;
 
     if (!this._clientId || !this._clientSecret) {
-      throw new Error('Wrong credentials! Cannot authorize to the API!');
+      throw new Error('Wrong credentials! Cannot authorize to the Bancho API!');
     }
 
     // https://osu.ppy.sh/oauth/token
@@ -80,7 +80,7 @@ export class BanchoAPIClient extends APIClientWithOAuth implements
         return true;
       }
 
-      throw new Error('Cannot authorize to the API!');
+      throw new Error('Cannot authorize to the Bancho API!');
     }
     catch {
       return false;
