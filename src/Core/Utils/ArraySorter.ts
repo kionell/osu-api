@@ -27,6 +27,18 @@ export function sortUserBest(scores: IScoreInfo[], order: SortingType = SortingT
 
     case SortingType.AccuracyReverse:
       return scores.sort((a, b) => b.accuracy - a.accuracy);
+
+    case SortingType.BPM:
+      return scores.sort((a, b) => (a.beatmap?.bpmMode ?? 0) - (b.beatmap?.bpmMode ?? 0));
+
+    case SortingType.BPMReverse:
+      return scores.sort((a, b) => (b.beatmap?.bpmMode ?? 0) - (a.beatmap?.bpmMode ?? 0));
+
+    case SortingType.Score:
+      return scores.sort((a, b) => a.totalScore - b.totalScore);
+
+    case SortingType.ScoreReverse:
+      return scores.sort((a, b) => b.totalScore - a.totalScore);
   }
 
   return scores.sort((a, b) => (a.pp ?? 0) - (b.pp ?? 0));

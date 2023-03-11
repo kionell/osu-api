@@ -7,4 +7,8 @@ export const enum SortingType {
   DateReverse,
   Accuracy,
   AccuracyReverse,
+  BPM,
+  BPMReverse,
+  Score,
+  ScoreReverse,
 }
