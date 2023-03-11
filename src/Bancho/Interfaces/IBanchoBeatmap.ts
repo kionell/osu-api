@@ -1,5 +1,6 @@
-import type { RankStatus } from '@Core';
+import type { GameMode } from '@Core';
 import type { IBanchoBeatmapCompact } from './IBanchoBeatmapCompact';
+import type { BanchoRankStatus } from '../Enums';
 
 export interface IBanchoBeatmap extends IBanchoBeatmapCompact {
   accuracy: number;
@@ -16,9 +17,9 @@ export interface IBanchoBeatmap extends IBanchoBeatmapCompact {
   hit_length: number;
   is_scoreable: boolean;
   last_updated: string | null;
-  mode_int: number;
+  mode_int: GameMode;
   passcount: number;
   playcount: number;
-  ranked: RankStatus;
+  ranked: BanchoRankStatus;
   url: string;
 }

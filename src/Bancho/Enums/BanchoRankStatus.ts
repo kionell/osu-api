@@ -1,4 +1,4 @@
-export const enum RankStatus {
+export enum BanchoRankStatus {
   Graveyard = -2,
   WIP = -1,
   Pending,

@@ -1,4 +1,5 @@
-import type { GameMode, RankStatus } from '@Core';
+import type { GameMode } from '@Core';
+import type { BanchoRankStatus } from '../Enums';
 import type { IBanchoBeatmapset } from './IBanchoBeatmapset';
 import type { IBanchoBeatmapsetCompact } from './IBanchoBeatmapsetCompact';
 
@@ -8,7 +9,7 @@ export interface IBanchoBeatmapCompact {
   difficulty_rating: number;
   id: number;
   mode: GameMode;
-  status: Lowercase<keyof typeof RankStatus>;
+  status: Lowercase<keyof typeof BanchoRankStatus>;
   total_length: number;
   user_id: number;
   version: string;

@@ -1,11 +1,11 @@
-import type { RankStatus } from '@Core';
+import type { BanchoRankStatus } from '../Enums';
 import type { IBanchoBeatmapsetCompact } from './IBanchoBeatmapsetCompact';
 
 export interface IBanchoBeatmapset extends IBanchoBeatmapsetCompact {
   bpm: number;
   creator: string;
   last_updated: string;
-  ranked: RankStatus;
+  ranked: BanchoRankStatus;
   ranked_date: string | null;
   source: string;
   storyboard: boolean;
