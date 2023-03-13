@@ -27,8 +27,9 @@ export abstract class APIClient {
    */
   private static _instances = new Map<new () => APIClient, APIClient>();
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  protected constructor() {}
+  protected constructor() {
+    return;
+  }
 
   static getInstance(): APIClient {
     const constructor = this.prototype.constructor as new () => APIClient;

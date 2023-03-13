@@ -1,14 +1,14 @@
 import {
   APIClient,
-  type ILeaderboardRequestOptions,
-  type IScoreListRequestOptions,
-  type IUserRequestOptions,
-  type IBeatmapRequestOptions,
-  type IHasBeatmaps,
-  type IHasLeaderboard,
-  type IHasRecent,
-  type IHasTop,
-  type IHasUsers,
+  ILeaderboardRequestOptions,
+  IScoreListRequestOptions,
+  IUserRequestOptions,
+  IBeatmapRequestOptions,
+  IHasBeatmaps,
+  IHasLeaderboard,
+  IHasRecent,
+  IHasTop,
+  IHasUsers,
 } from '@Core';
 
 import {

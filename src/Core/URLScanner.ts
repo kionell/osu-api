@@ -147,7 +147,7 @@ export abstract class URLScanner {
   }
 
   /**
-   * Checks if specified URL is an user URL.
+   * Checks if specified URL is a user URL.
    * @param text Target URL.
    * @returns Result of cheking.
    */
