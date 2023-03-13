@@ -17,6 +17,7 @@ import {
   IHasScores,
   IHasTop,
   IHasUsers,
+  IHasFirsts,
 } from '@Core';
 
 import {
@@ -33,13 +34,20 @@ import {
 import { BanchoURLGenerator } from './BanchoURLGenerator';
 import { searchBeatmap } from './Utils';
 
+export interface IBanchoAPI extends
+  IHasAttributes,
+  IHasBeatmaps,
+  IHasScores,
+  IHasLeaderboard,
+  IHasUsers,
+  IHasRecent,
+  IHasTop,
+  IHasFirsts {}
+
 /**
  * A wrapper for Bancho API v2.
  */
-export class BanchoAPIClient extends APIClientWithOAuth implements
-  IHasAttributes, IHasBeatmaps, IHasLeaderboard,
-  IHasRecent, IHasScores, IHasTop, IHasUsers {
-
+export class BanchoAPIClient extends APIClientWithOAuth implements IBanchoAPI {
   /**
    * Bancho URL generator.
    */

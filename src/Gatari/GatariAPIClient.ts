@@ -9,6 +9,7 @@ import {
   IHasRecent,
   IHasTop,
   IHasUsers,
+  IHasFirsts,
 } from '@Core';
 
 import {
@@ -20,11 +21,18 @@ import {
 import { GatariURLGenerator } from './GatariURLGenerator';
 import { IGatariBeatmapScore, IGatariUserBeatmapScore, IGatariUserScore } from './Interfaces';
 
+export interface IGatariAPI extends
+  IHasBeatmaps,
+  IHasLeaderboard,
+  IHasUsers,
+  IHasRecent,
+  IHasFirsts,
+  IHasTop {}
+
 /**
  * A wrapper for Gatari API.
  */
-export class GatariAPIClient extends APIClient implements
-  IHasBeatmaps, IHasLeaderboard, IHasRecent, IHasTop, IHasUsers {
+export class GatariAPIClient extends APIClient implements IGatariAPI {
 
   /**
    * Bancho URL generator.
