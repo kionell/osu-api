@@ -13,14 +13,19 @@ export class GatariScoreInfo extends ScoreInfo {
 
     const full = other as IGatariUserScore & IGatariBeatmapScore & IGatariUserBeatmapScore;
 
+    this.countGeki = full?.count_gekis ?? full?.gekis_count ?? this.countGeki;
+    this.countKatu = full?.count_katu ?? full?.katus_count ?? this.countKatu;
+    this.count300 = full?.count_300 ?? this.count300;
+    this.count100 = full?.count_100 ?? this.count100;
+    this.count50 = full?.count_50 ?? this.count50;
+    this.countMiss = full?.count_miss ?? this.countMiss;
+
     this.id = full?.id ?? this.id;
     this.totalScore = full?.score ?? this.totalScore;
     this.pp = full?.pp ?? this.pp;
     this.maxCombo = full?.max_combo ?? this.maxCombo;
-    this.rank = full?.rank ?? full?.ranking ?? this.rank;
-    this.passed = full?.rank !== 'F';
+    this.passed = (full?.rank ?? full?.ranking) !== 'F';
     this.perfect = full?.full_combo ?? full?.max_combo >= full?.fc;
-    this.accuracy = full?.accuracy ?? this.accuracy;
     this.username = full?.username ?? this.username;
     this.userId = full?.userid ?? this.userId;
 
@@ -35,12 +40,5 @@ export class GatariScoreInfo extends ScoreInfo {
     this.beatmapId = full?.beatmap?.beatmap_id ?? this.beatmapId;
     this.date = full?.time ? new Date(full.time * 1000) : this.date;
     this.beatmapHashMD5 = full?.beatmap?.beatmap_md5 ?? this.beatmapHashMD5;
-
-    this.countGeki = full?.count_gekis ?? full?.gekis_count ?? this.countGeki;
-    this.countKatu = full?.count_katu ?? full?.katus_count ?? this.countKatu;
-    this.count300 = full?.count_300 ?? this.count300;
-    this.count100 = full?.count_100 ?? this.count100;
-    this.count50 = full?.count_50 ?? this.count50;
-    this.countMiss = full?.count_miss ?? this.countMiss;
   }
 }

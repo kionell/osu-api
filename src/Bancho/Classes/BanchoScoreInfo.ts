@@ -7,13 +7,18 @@ export class BanchoScoreInfo extends ScoreInfo {
   constructor(other: IBanchoScore) {
     super();
 
+    this.countGeki = other.statistics.count_geki;
+    this.countKatu = other.statistics.count_katu;
+    this.count300 = other.statistics.count_300;
+    this.count100 = other.statistics.count_100;
+    this.count50 = other.statistics.count_50;
+    this.countMiss = other.statistics.count_miss;
+
     this.id = other.id;
     this.totalScore = other.score;
     this.pp = other.pp ?? this.pp;
-    this.accuracy = other.accuracy ?? this.accuracy;
-    this.rank = other.rank;
     this.maxCombo = other.max_combo;
-    this.passed = other.passed;
+    this.passed = other.passed ?? other.rank !== 'F';
     this.perfect = other.perfect;
     this.userId = other.user_id;
     this.username = other.user?.username ?? this.username;
@@ -28,12 +33,5 @@ export class BanchoScoreInfo extends ScoreInfo {
 
     this.beatmapId = other.beatmap?.id ?? this.beatmapId;
     this.date = new Date(other.created_at ?? Date.now());
-
-    this.countGeki = other.statistics.count_geki;
-    this.countKatu = other.statistics.count_katu;
-    this.count300 = other.statistics.count_300;
-    this.count100 = other.statistics.count_100;
-    this.count50 = other.statistics.count_50;
-    this.countMiss = other.statistics.count_miss;
   }
 }
