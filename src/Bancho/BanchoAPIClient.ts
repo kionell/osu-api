@@ -62,8 +62,11 @@ export class BanchoAPIClient extends APIClientWithOAuth implements IBanchoAPI {
    * Authorizes to the API.
    * @returns If authorization was successful or not.
    */
-  async authorize(): Promise<boolean> {
+  async authorize(clientId?: string, clientSecret?: string): Promise<boolean> {
     if (this.isAuthorized) return true;
+
+    this._clientId = clientId ?? this._clientId;
+    this._clientSecret = clientSecret ?? this._clientSecret;
 
     if (!this._clientId || !this._clientSecret) {
       throw new Error('Wrong credentials! Cannot authorize to the Bancho API!');
