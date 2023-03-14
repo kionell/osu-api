@@ -10,7 +10,7 @@ export class BanchoBeatmapInfo extends BeatmapInfo {
 
     this.id = other.id;
     this.beatmapsetId = other.beatmapset_id;
-    this.md5 = other.checksum ?? this.md5;
+    this.hashMD5 = other.checksum ?? this.hashMD5;
     this.creatorId = other?.user_id || other.beatmapset?.user_id || this.creatorId;
     this.creator = other.beatmapset?.creator ?? this.creator;
 
@@ -33,8 +33,8 @@ export class BanchoBeatmapInfo extends BeatmapInfo {
     }
 
     this.length = other.total_length;
-    this.bpmMode = full.bpm ?? this.bpmMode;
-    this.bpmMin = this.bpmMax = this.bpmMode;
+    this.bpm = full.bpm ?? this.bpm;
+    this.bpmMin = this.bpmMax = this.bpm;
 
     this.circleSize = full.cs ?? this.circleSize;
     this.approachRate = full.ar ?? this.approachRate;

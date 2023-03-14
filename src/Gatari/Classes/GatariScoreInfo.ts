@@ -1,6 +1,7 @@
 import { ScoreInfo } from 'osu-classes';
 import { getRuleset } from '@Core';
 import { GatariBeatmapInfo } from './GatariBeatmapInfo';
+
 import type {
   IGatariUserScore,
   IGatariBeatmapScore,
@@ -22,7 +23,7 @@ export class GatariScoreInfo extends ScoreInfo {
 
     this.id = full?.id ?? this.id;
     this.totalScore = full?.score ?? this.totalScore;
-    this.pp = full?.pp ?? this.pp;
+    this.totalPerformance = full?.pp ?? this.totalPerformance;
     this.maxCombo = full?.max_combo ?? this.maxCombo;
     this.passed = (full?.rank ?? full?.ranking) !== 'F';
     this.perfect = full?.full_combo ?? full?.max_combo >= full?.fc;

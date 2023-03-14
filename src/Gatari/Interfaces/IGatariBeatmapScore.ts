@@ -1,4 +1,4 @@
-import { ScoreRank } from 'osu-classes';
+import { CountryCode, ScoreRank } from 'osu-classes';
 import { GameMode } from '@Core';
 
 export interface IGatariBeatmapScore {
@@ -19,7 +19,7 @@ export interface IGatariBeatmapScore {
   pp: number;
   play_mode: GameMode;
   time: number;
-  country: Uppercase<string>,
+  country: keyof typeof CountryCode,
   fc: number;
   username: string;
 }

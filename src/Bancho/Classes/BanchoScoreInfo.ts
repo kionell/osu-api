@@ -16,7 +16,7 @@ export class BanchoScoreInfo extends ScoreInfo {
 
     this.id = other.id;
     this.totalScore = other.score;
-    this.pp = other.pp ?? this.pp;
+    this.totalPerformance = other.pp ?? this.totalPerformance;
     this.maxCombo = other.max_combo;
     this.passed = other.passed ?? other.rank !== 'F';
     this.perfect = other.perfect;

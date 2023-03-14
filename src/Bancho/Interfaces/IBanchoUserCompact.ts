@@ -1,6 +1,11 @@
+import { CountryCode } from 'osu-classes';
+import { IBanchoUserHighestRank } from './IBanchoUserHighestRank';
+import { IBanchoUserRankHistory } from './IBanchoUserRankHistory';
+import { IBanchoUserStatistics } from './IBanchoUserStatistics';
+
 export interface IBanchoUserCompact {
   avatar_url: string;
-  country_code: Uppercase<string>;
+  country_code: keyof typeof CountryCode;
   default_group: string;
   id: number;
   is_active: boolean;
@@ -12,4 +17,9 @@ export interface IBanchoUserCompact {
   pm_friends_only: boolean;
   profile_colour: string | null;
   username: string;
+  previous_usernames?: string[];
+  follower_count?: number;
+  rank_highest?: IBanchoUserHighestRank;
+  statistics?: IBanchoUserStatistics;
+  rankHistory?: IBanchoUserRankHistory;
 }

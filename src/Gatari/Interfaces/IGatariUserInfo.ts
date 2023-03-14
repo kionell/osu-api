@@ -1,9 +1,10 @@
 import { GameMode } from '@Core';
+import { CountryCode } from 'osu-classes';
 
 export interface IGatariUserInfo {
   abbr: string | null;
   clanid: number | null;
-  country: Uppercase<string>;
+  country: keyof typeof CountryCode;
   custom_hue: number;
   favourite_mode: GameMode;
   followers_count: number;

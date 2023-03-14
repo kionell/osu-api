@@ -10,7 +10,7 @@ export class GatariBeatmapInfo extends BeatmapInfo {
 
     this.id = full.beatmap_id;
     this.beatmapsetId = full.beatmapset_id;
-    this.md5 = full?.beatmap_md5 ?? this.md5;
+    this.hashMD5 = full?.beatmap_md5 ?? this.hashMD5;
     this.creator = full?.creator ?? this.creator;
 
     this.title = full?.title ?? this.title;
@@ -21,8 +21,8 @@ export class GatariBeatmapInfo extends BeatmapInfo {
     this.version = full.version;
 
     this.length = full.hit_length;
-    this.bpmMode = full?.bpm ?? this.bpmMode;
-    this.bpmMin = this.bpmMax = this.bpmMode;
+    this.bpm = full?.bpm ?? this.bpm;
+    this.bpmMin = this.bpmMax = this.bpm;
 
     this.circleSize = full.cs ?? this.circleSize;
     this.approachRate = full.ar ?? this.approachRate;
